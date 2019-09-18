@@ -84,13 +84,13 @@ namespace gameRPG.BL.Controller
                 Items.Remove(CurrentItem);
                 userController.Save();
                 SaveItems();
-                IsSuccess = true;
-                Messages($"Пердмет: {CurrentItem.Name} продано");
+               
+                Messages($"Пердмет: {CurrentItem.Name} продано", true);
             }
             else
             {
-                IsSuccess = false;
-                Messages($"Предмет: {CurrentItem.Name} не може бути проданим до тих пір поки він одітий!");
+                
+                Messages($"Предмет: {CurrentItem.Name} не може бути проданим до тих пір поки він одітий!", false);
             }
         }
         public void SetItem(int id)
@@ -110,18 +110,17 @@ namespace gameRPG.BL.Controller
                 userController.CurrentUser.Defence += CurrentItem.Defence;
                 userController.Save();
                 SaveItems();
-                IsSuccess = true;
-                Messages($"Предмет: {CurrentItem.Name} одіто!");
+                Messages($"Предмет: {CurrentItem.Name} одіто!", true);
             }
             else if(CurrentItem == null)
             {
-                IsSuccess = false;
-                Messages("Введіть коректний ID");
+               
+                Messages("Введіть коректний ID", false);
             }
             else
             {
-                IsSuccess = false;
-                Messages("Предмет вже одітий!");
+                
+                Messages("Предмет вже одітий!", false);
                
             }
         }
@@ -140,19 +139,16 @@ namespace gameRPG.BL.Controller
                 userController.CurrentUser.Defence -= CurrentItem.Defence;
                 userController.Save();
                 SaveItems();
-                IsSuccess = true;
-                Messages($"Предмет: {CurrentItem.Name} скинуто!");
+                
+                Messages($"Предмет: {CurrentItem.Name} скинуто!", true);
             }
             else if (CurrentItem == null)
             {
-
-                IsSuccess = false;
-                Messages("Введіть коректний ID");
+                Messages("Введіть коректний ID", false);
             }
             else
             {
-                IsSuccess = false;
-                Messages("Предмет не одіто!");
+                Messages("Предмет не одіто!", false);
             }
         }
     }

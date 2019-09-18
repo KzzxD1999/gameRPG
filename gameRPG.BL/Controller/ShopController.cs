@@ -38,13 +38,12 @@ namespace gameRPG.BL.Controller
             if(!(userController.CurrentUser.MaxWeight >= 10000) && userController.CurrentUser.Money > userController.CurrentUser.InvetoryPrice)
                 {
                 InvreaseInvetoryWeight(userController);
-                IsSuccess = true;
-                Messages($"Інвентар успішно розширений і його максимальна вага становить: {userController.CurrentUser.MaxWeight}");
+       
+                Messages($"Інвентар успішно розширений і його максимальна вага становить: {userController.CurrentUser.MaxWeight}", true);
             }else
             {
-                IsSuccess = false;
                 Messages($"Недостатнь коштів на рахунку: {CurrentUser.Money} , " +
-                         $"або у вас вже максимальна вага: {CurrentUser.MaxWeight} !");
+                         $"або у вас вже максимальна вага: {CurrentUser.MaxWeight} !", false);
             }
             
         }
@@ -70,8 +69,8 @@ namespace gameRPG.BL.Controller
                     CurrentItem.UserName = CurrentUser.Name;
                     if (CurrentItem.Price > CurrentUser.Money)
                     {
-                        IsSuccess = false;
-                        Messages($"Недостатнь коштів на рахунку: {CurrentUser.Money}");
+
+                        Messages($"Недостатнь коштів на рахунку: {CurrentUser.Money}", false);
                     }
                     else
                     {
@@ -83,14 +82,13 @@ namespace gameRPG.BL.Controller
                             itemController.Items.Add(CurrentItem);
                             itemController.SaveItems();
                             userController.Save();
-                            IsSuccess = true;
-                            Messages($"Ви успішно купили: {CurrentItem.Name}");
+                            Messages($"Ви успішно купили: {CurrentItem.Name}",true);
                             break;
                         }
                         else
                         {
-                            IsSuccess = false;
-                            Messages("Вага предметів в вашому інветарі більша або рівна за вашу норму, ви не можете купити предмет!");
+                            Messages("Вага предметів в вашому інветарі більша або рівна за вашу норму, " +
+                                     "ви не можете купити предмет!", false);
                             break;
                         }
                         

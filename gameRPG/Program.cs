@@ -120,7 +120,7 @@ namespace gameRPG
         private static void IncreaseInventory()
         {
             shopController = new ShopController(userController.CurrentUser);
-            shopController.MessagesEventFail += MessagesEventSuccess;
+            shopController.MessagesEventSuccess += MessagesEventSuccess;
             shopController.MessagesEventFail += MessagesEventFail;
             shopController.IncreaseInventory();
 
@@ -159,6 +159,7 @@ namespace gameRPG
 
         private static void Battle()
         {
+
             userController.AddMoney();
             Console.WriteLine("Незабаром буде :)");
         }

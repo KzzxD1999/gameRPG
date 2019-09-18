@@ -10,7 +10,7 @@ namespace gameRPG.BL.Controller
 {
     public class BaseContoller
     {
-        protected bool IsSuccess { get; set; } = false;
+     
         public event EventHandler<string> MessagesEventSuccess;
         public event EventHandler<string> MessagesEventFail;
         protected void Save(string fileName, object obj)
@@ -37,17 +37,16 @@ namespace gameRPG.BL.Controller
             }
 
         }
-        protected void Messages(string msg)
+        protected void Messages(string msg, bool isSuccess)
         {
-            if (IsSuccess)
+            if (isSuccess)
             {
                 MessagesEventSuccess?.Invoke(msg, null);
-                IsSuccess = false; 
             }
             else
             {
                 MessagesEventFail?.Invoke(msg, null);
-                IsSuccess = false;
+        
             }
         }
     }
