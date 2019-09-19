@@ -300,6 +300,8 @@ namespace gameRPG
             ItemController itemController = new ItemController(userController1.CurrentUser);
             Console.WriteLine("-------------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Рівень: {userController1.CurrentUser.Level} \tДосвід:{userController1.CurrentUser.Experience}");
+            Console.WriteLine($"До наступного рівня: {userController1.CurrentUser.ExpToUp - userController1.CurrentUser.Experience} досвіду");
             Console.WriteLine($"Вiк:{userController1.CurrentUser.Age}");
             Console.WriteLine($"Стать:{userController1.CurrentUser.Gender.Name}");
             Console.WriteLine($"Здоров'я:{userController1.CurrentUser.HitPoint}\tМана:{userController1.CurrentUser.ManaPoint}");

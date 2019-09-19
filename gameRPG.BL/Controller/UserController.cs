@@ -18,15 +18,11 @@ namespace gameRPG.BL
         public const string FILE_NAME = "users.dat";
         public double CurrentWeight { get; set; }
         public bool IsNew { get; set; } = false;
-
         public UserController(string name)
         {
             Users = GetUsers();
 
             CurrentUser = Users.SingleOrDefault(x => x.Name == name);
-
-          
-
             if (CurrentUser == null)
             {
                 CurrentUser = new User(name);
@@ -35,6 +31,7 @@ namespace gameRPG.BL
                 Save();
 
             }
+         
             CurrentWeight = CurrentUser.Weight;
         }
 
@@ -76,13 +73,27 @@ namespace gameRPG.BL
                 return "Не визначено";
             }
         }
-
+        public void LvlUp()
+        {
+      
+            if(CurrentUser.Experience >= CurrentUser.ExpToUp)
+            {
+                double remainderOfExp = CurrentUser.Experience % CurrentUser.ExpToUp;
+                CurrentUser.Level += 1;
+                CurrentUser.ExpToUp += CurrentUser.ExpToUp * 1.2;
+                CurrentUser.ExpToUp -= remainderOfExp;
+                CurrentUser.Experience = 0;
+            }
+        }
         public void AddMoney()
         {
             Random random = new Random();
             double money = random.Next(10, 100);
+            double exp = random.Next(10, 100);
             CurrentUser.Money += money;
-            Console.WriteLine($"Додано: {money}");
+            CurrentUser.Experience += exp;
+            LvlUp();
+            Console.WriteLine($"Гроші: {money}, Досвід: {exp}");
             Save();
         }
     }

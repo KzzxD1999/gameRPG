@@ -23,6 +23,9 @@ namespace gameRPG.BL.Models
         public double Weight { get; set; } = 0;
         public double MaxWeight { get; set; } = 1000.0;
         public double InvetoryPrice { get; set; } = 250.0;
+        public int Level { get; set; } = 1;
+        public double Experience { get; set; } = 0;
+        public double ExpToUp { get; set; } = 50;
         public User(string name)
         {
             Name = name;
