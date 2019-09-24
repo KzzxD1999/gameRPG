@@ -77,20 +77,27 @@ namespace gameRPG.BL.Controller
             CurrentItem = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
             CurrentUser.Item = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
             UserController userController = new UserController(CurrentUser.Name);
-            if(CurrentItem !=null && !CurrentItem.IsEquipped)
+            if(CurrentItem !=null)
             {
-                userController.CurrentUser.Money += CurrentItem.Price;
-                userController.CurrentUser.Weight -= CurrentItem.Weigth;
-                Items.Remove(CurrentItem);
-                userController.Save();
-                SaveItems();
-               
-                Messages($"Пердмет: {CurrentItem.Name} продано", true);
+                if (!CurrentItem.IsEquipped)
+                {
+                    userController.CurrentUser.Money += CurrentItem.Price;
+                    userController.CurrentUser.Weight -= CurrentItem.Weigth;
+                    Items.Remove(CurrentItem);
+                    userController.Save();
+                    SaveItems();
+
+                    Messages($"Пердмет: {CurrentItem.Name} продано", true);
+                }
+                else
+                {
+                    Messages($"Предмет: {CurrentItem.Name} не може бути проданим до тих пір поки він одітий!", false);
+                }
             }
             else
             {
-                
-                Messages($"Предмет: {CurrentItem.Name} не може бути проданим до тих пір поки він одітий!", false);
+                Messages($"Предмет не існує", false);
+
             }
         }
         public void SetItem(int id)
@@ -98,6 +105,7 @@ namespace gameRPG.BL.Controller
             CurrentItem = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
             CurrentUser.Item = Items.Find(x=>x.Id == id && x.UserName == CurrentUser.Name);
             UserController userController = new UserController(CurrentUser.Name);
+            //TODO: Подумати над перевіркою значень
             if (CurrentItem != null && !CurrentItem.IsEquipped)
             {
                 CurrentItem.IsEquipped = true;

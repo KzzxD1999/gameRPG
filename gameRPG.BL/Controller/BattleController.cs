@@ -17,6 +17,7 @@ namespace gameRPG.BL.Controller
         {
             CurrentUser = user;
             CurrentBoss = boss;
+            //TODO: Як враховувати броню ??
             BossHpAndDef = CurrentBoss.HitPoint + (CurrentBoss.Defence * 0.2);
             UserHpAndDef = CurrentUser.HitPoint + (CurrentUser.Defence * 0.3);
         }
@@ -65,12 +66,12 @@ namespace gameRPG.BL.Controller
             userController.Save();
         }
 
-        private static void SaveBoss(BossController bossController)
+        private void SaveBoss(BossController bossController)
         {
             //TODO: Придумати як оновлювати боса
             Random random = new Random();
-            int attack = random.Next(8, 18);
-            int hitPoint = random.Next(20, 50);
+            int attack = random.Next(2, 6);
+            int hitPoint = random.Next(10, 15);
             int defence = random.Next(4, 10);
             int dropExp = random.Next(100, 220);
             int dropMoney = random.Next(150, 250);
@@ -79,7 +80,7 @@ namespace gameRPG.BL.Controller
             bossController.CurrentBoss.Defence += defence;
             bossController.CurrentBoss.DropExp += dropExp;
             bossController.CurrentBoss.MoneyDrop += dropMoney;
-            bossController.Save();
+            bossController.Update(CurrentBoss);
         }
     }
 }

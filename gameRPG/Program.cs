@@ -191,7 +191,7 @@ namespace gameRPG
             BossController bossController = new BossController(userController.CurrentUser);
             userController = new UserController(userName);
            
-            var boss = bossController.FindBossById(Actions());
+            var boss = bossController.FindBossById(Actions(), userController.CurrentUser);
             BattleController battleController = new BattleController(userController.CurrentUser, boss);
            
             while (true)
@@ -239,30 +239,22 @@ namespace gameRPG
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Користувач: {battleController.CurrentUser.Name} програв");
+                battleController.MessagesEventFail += MessagesEventFail;
                 Console.WriteLine($"Ви нічого не отримали");
-                ShowMenu();
                 Console.ForegroundColor = ConsoleColor.White;
+                ShowMenu();
             } else if(battleController.BossHpAndDef <= 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Бос: {battleController.CurrentBoss.Name} програв");
+                battleController.MessagesEventSuccess += MessagesEventSuccess;
+               
+    
                 battleController.DropedExpAndItem();
                 Console.ForegroundColor = ConsoleColor.White;
+                ShowMenu();
             }
         }
-
-        private static void ApplyHeal()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void Magic()
-        {
-            throw new NotImplementedException();
-        }
-
-    
-       
         private static void ShowAllBosses()
         {
             BossController bossController = new BossController(userController.CurrentUser);

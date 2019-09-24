@@ -33,9 +33,9 @@ namespace gameRPG.BL.Controller
             CurrentBoss = boss;
             
         }
-        public Boss FindBossById(int id)
+        public Boss FindBossById(int id, User user)
         {
-            return Bosses.FirstOrDefault(x => x.Id == id);
+            return Bosses.FirstOrDefault(x => x.Id == id && x.UserName == user.Name);
         }
         private List<Boss> GetUserBosses(User user)
         {
@@ -61,17 +61,20 @@ namespace gameRPG.BL.Controller
         public List<Boss> AddBosess()
         {
             Random random = new Random();
-            int money = random.Next(50, 100);
+            int bossMoneyOne = random.Next(150, 220);
+            int bossMoneyTwo = random.Next(450, 650);
+            int bossMoneyThree = random.Next(850, 990);
+
 
             List<Boss> bosses = new List<Boss>()
             {
 
 
-                new Boss(1,"Дракон", CurrentUser.Name, 150, 500, 8, 150, 5,500, money, null),
+                new Boss(1,"Дракон", CurrentUser.Name, 150, 500, 8, 24, 5,500, bossMoneyOne, null),
 
-                new Boss(2,"Відьма",CurrentUser.Name, 500, 900, 450, 220, 10 , 1100, 658, null),
+                new Boss(2,"Відьма",CurrentUser.Name, 340, 900, 32, 44, 10 , 1100, bossMoneyTwo, null),
 
-                new Boss(3,"Саурон", CurrentUser.Name, 1100, 1500, 1050, 450, 18, 2400, 980, null)
+                new Boss(3,"Саурон", CurrentUser.Name, 560, 1500, 58, 450, 18, 2400, bossMoneyThree, null)
             };
             Bosses.AddRange(bosses);
             Save();
@@ -81,6 +84,16 @@ namespace gameRPG.BL.Controller
         public void Save()
         {
             Save(FILE_NAME, Bosses);
+        }
+        public void Update(Boss boss)
+        {
+            CurrentBoss = Bosses.FirstOrDefault(x => x.Id == boss.Id && x.UserName == boss.UserName);
+            CurrentBoss.Attack = boss.Attack;
+            CurrentBoss.Defence = boss.Defence;
+            CurrentBoss.DropExp = boss.DropExp;
+            CurrentBoss.MoneyDrop = boss.MoneyDrop;
+            CurrentBoss.HitPoint = boss.HitPoint;
+            Save();
         }
     }
 }

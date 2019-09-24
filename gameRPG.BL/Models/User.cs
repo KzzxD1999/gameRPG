@@ -10,6 +10,7 @@ namespace gameRPG.BL.Models
     public class User
     {
       
+        //TODO: Створити кількість перемог, поразок
         public string Name { get; set; }
         public int Age { get; set; }
         public double HitPoint { get; set; } = 100;
