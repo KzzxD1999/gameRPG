@@ -37,6 +37,7 @@ namespace gameRPG.BL
 
         public void Save()
         {
+            LvlUp();
             Save(FILE_NAME, Users);
           
         }
@@ -47,14 +48,18 @@ namespace gameRPG.BL
             
         }
 
-        public void SetNewUserData(int age, string genderName, List<Item> items = null)
+        public void SetNewUserData(int age, string genderName, List<Item> items = null, List<Boss> bosses = null)
         {
             ItemController itemController = new ItemController(CurrentUser);
+            BossController bossController = new BossController(CurrentUser);
             CurrentUser.Age = age;
             CurrentUser.Gender = new Gender(RenameGender(genderName));
             items = itemController.DefaultItems(CurrentUser.Name);
             CurrentUser.Items = items;
+            bosses = bossController.AddBosess();
+            CurrentUser.Bosses = bosses;
             itemController.SaveItems();
+            bossController.Save();
             Save();
            
         }

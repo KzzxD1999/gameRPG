@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\BaseContoller.cs" />
+    <Compile Include="Controller\BattleController.cs" />
+    <Compile Include="Controller\BossController.cs" />
     <Compile Include="Controller\ItemController.cs" />
     <Compile Include="Controller\ShopController.cs" />
+    <Compile Include="Models\Boss.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Shop.cs" />

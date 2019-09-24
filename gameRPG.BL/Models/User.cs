@@ -20,6 +20,7 @@ namespace gameRPG.BL.Models
         public double Money { get; set; } = 0;
         public Item Item { get; set; }
         public List<Item> Items { get; set; }
+        public List<Boss> Bosses { get; set; }
         public double Weight { get; set; } = 0;
         public double MaxWeight { get; set; } = 1000.0;
         public double InvetoryPrice { get; set; } = 250.0;

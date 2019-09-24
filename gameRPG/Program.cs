@@ -160,8 +160,127 @@ namespace gameRPG
         private static void Battle()
         {
 
-            userController.AddMoney();
-            Console.WriteLine("Незабаром буде :)");
+            while (true)
+            {
+                Console.WriteLine("1)Показати всіх босів");
+                Console.WriteLine("2)Бій з босом");
+                Console.WriteLine("3)Вихід");
+                var key = Console.ReadKey();
+                switch (key.Key) {
+                    case ConsoleKey.D1:
+                        ShowAllBosses();
+                        break;
+                    case ConsoleKey.D2:
+                        BattleWithBoss();
+                        break;
+                    case ConsoleKey.D3:
+                        ShowMenu();
+                        break;
+                    default:
+                        ShowAllBosses();
+                        break;
+                }
+            }
+
+           
+        }
+
+        private static void BattleWithBoss()
+        {
+            Console.WriteLine("Введіть ID боса, з яким ви хочете битись!");
+            BossController bossController = new BossController(userController.CurrentUser);
+            userController = new UserController(userName);
+           
+            var boss = bossController.FindBossById(Actions());
+            BattleController battleController = new BattleController(userController.CurrentUser, boss);
+           
+            while (true)
+            {
+                BattleInformation(battleController);
+
+                Console.WriteLine("1)Атака");
+                Console.WriteLine("2)Застосувати магію");
+                Console.WriteLine("3)Вилікувати");
+                Console.WriteLine("4)Вихід");
+                var key = Console.ReadKey();
+                switch (key.Key)
+                {
+                    case ConsoleKey.D1:
+                        battleController.Attack();
+                        break;
+                    case ConsoleKey.D4:
+                        //TODO: Придумати що робити у випадку, виходу під час бою.
+                        ShowMenu();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+        private static void BattleInformation(BattleController battleController)
+        {
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Інформація про бій");
+            Console.WriteLine($"Користувач: {userController.CurrentUser.Name}");
+            Console.WriteLine($"Атака: {userController.CurrentUser.Attack}");
+            Console.WriteLine($"Здоров'я + Захист: {battleController.UserHpAndDef}");
+            Console.WriteLine($"Захист: {userController.CurrentUser.Defence}");
+            Console.WriteLine($"Мана: {userController.CurrentUser.ManaPoint}");
+            Console.WriteLine("\t\tПРОТИ");
+            Console.WriteLine($"Бос: {battleController.CurrentBoss.Name}");
+            Console.WriteLine($"Атака: {battleController.CurrentBoss.Attack}");
+            Console.WriteLine($"Здоров'я + Захист: {battleController.BossHpAndDef}");
+            Console.WriteLine($"Захист: {battleController.CurrentBoss.Defence}");
+            Console.WriteLine($"Мана: {battleController.CurrentBoss.ManaPoint}");
+            Console.WriteLine("-----------------------");
+            if(battleController.UserHpAndDef <= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Користувач: {battleController.CurrentUser.Name} програв");
+                Console.WriteLine($"Ви нічого не отримали");
+                ShowMenu();
+                Console.ForegroundColor = ConsoleColor.White;
+            } else if(battleController.BossHpAndDef <= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Бос: {battleController.CurrentBoss.Name} програв");
+                battleController.DropedExpAndItem();
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+
+        private static void ApplyHeal()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void Magic()
+        {
+            throw new NotImplementedException();
+        }
+
+    
+       
+        private static void ShowAllBosses()
+        {
+            BossController bossController = new BossController(userController.CurrentUser);
+            
+            foreach (var item in bossController.CurrentUser.Bosses)
+            {
+                Console.WriteLine("-----------------------");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"ID: {item.Id}");
+                Console.WriteLine($"Ім'я: {item.Name}");
+                Console.WriteLine($"Рівень: {item.Level}");
+                Console.WriteLine($"Здоров'я: {item.HitPoint}");
+                Console.WriteLine($"Мана: {item.ManaPoint}");
+                Console.WriteLine($"Атака: {item.Attack}");
+                Console.WriteLine($"Захист: {item.Defence}");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("-----------------------");
+            }
         }
 
         private static void GetInventoryInformation()
