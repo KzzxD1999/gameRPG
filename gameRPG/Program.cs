@@ -193,11 +193,12 @@ namespace gameRPG
            
             var boss = bossController.FindBossById(Actions(), userController.CurrentUser);
             BattleController battleController = new BattleController(userController.CurrentUser, boss);
-           
-            while (true)
+            battleController.MessagesEventFail += MessagesEventFail;
+            battleController.MessagesEventSuccess += MessagesEventSuccess;
+            while (true && !battleController.IsExit)
             {
-                BattleInformation(battleController);
 
+                BattleInformation(battleController);
                 Console.WriteLine("1)Атака");
                 Console.WriteLine("2)Застосувати магію");
                 Console.WriteLine("3)Вилікувати");
@@ -216,6 +217,8 @@ namespace gameRPG
                         break;
                 }
             }
+ 
+
 
         }
 
@@ -235,23 +238,12 @@ namespace gameRPG
             Console.WriteLine($"Захист: {battleController.CurrentBoss.Defence}");
             Console.WriteLine($"Мана: {battleController.CurrentBoss.ManaPoint}");
             Console.WriteLine("-----------------------");
-            if(battleController.UserHpAndDef <= 0)
+
+  
+
+            if (battleController.IsExit)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Користувач: {battleController.CurrentUser.Name} програв");
-                battleController.MessagesEventFail += MessagesEventFail;
-                Console.WriteLine($"Ви нічого не отримали");
-                Console.ForegroundColor = ConsoleColor.White;
-                ShowMenu();
-            } else if(battleController.BossHpAndDef <= 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Бос: {battleController.CurrentBoss.Name} програв");
-                battleController.MessagesEventSuccess += MessagesEventSuccess;
-               
-    
-                battleController.DropedExpAndItem();
-                Console.ForegroundColor = ConsoleColor.White;
+
                 ShowMenu();
             }
         }
@@ -418,6 +410,7 @@ namespace gameRPG
             Console.WriteLine($"Здоров'я:{userController1.CurrentUser.HitPoint}\tМана:{userController1.CurrentUser.ManaPoint}");
             Console.WriteLine($"Атака:{userController1.CurrentUser.Attack}\tЗахист:{userController1.CurrentUser.Defence}");
             Console.WriteLine($"Поточна вага предметів: {userController1.CurrentWeight} \tМаксимальна вага предметів: {userController1.CurrentUser.MaxWeight}");
+            Console.WriteLine($"Кількість перемог над босами: {userController1.CurrentUser.Win}, кількість поразок: {userController1.CurrentUser.Loss}");
             if (itemController.CurrentUser.Items != null)
             {
                 Console.WriteLine($"Кiлькiсть предметiв в iнвентарi = {userController1.CurrentUser.Items.FindAll(x=>x.UserName == userName).Count()}");

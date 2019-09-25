@@ -28,6 +28,8 @@ namespace gameRPG.BL.Models
         public int Level { get; set; } = 1;
         public double Experience { get; set; } = 0;
         public double ExpToUp { get; set; } = 50;
+        public int Win { get; set; } = 0;
+        public int Loss { get; set; } = 0;
         public User(string name)
         {
             Name = name;

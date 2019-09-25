@@ -13,6 +13,8 @@ namespace gameRPG.BL.Controller
         public Boss CurrentBoss { get; set; }
         public double BossHpAndDef { get; set; }
         public double UserHpAndDef { get; set; }
+        public bool IsExit { get; set; } = false;
+        public bool IsWin { get; set; } = false;
         public BattleController(User user, Boss boss)
         {
             CurrentUser = user;
@@ -21,10 +23,7 @@ namespace gameRPG.BL.Controller
             BossHpAndDef = CurrentBoss.HitPoint + (CurrentBoss.Defence * 0.2);
             UserHpAndDef = CurrentUser.HitPoint + (CurrentUser.Defence * 0.3);
         }
-        public BattleController()
-        {
-
-        }
+       
 
   
 
@@ -32,6 +31,26 @@ namespace gameRPG.BL.Controller
         {
             BossHpAndDef -= CurrentUser.Attack;
             UserHpAndDef -= CurrentBoss.Attack;
+            
+            if (UserHpAndDef <= 0)
+            {
+                
+                Messages($"Користувач: {CurrentUser.Name} програв", false);
+                Messages($"Ви нічого не отримали", false);
+                
+                IsExit = true;
+               
+            }
+            else if (BossHpAndDef <= 0)
+            {
+
+                Messages($"Бос: {CurrentBoss.Name} програв", true);
+                IsWin = true;
+                IsExit = true;
+
+                DropedExpAndItem();
+                
+            }
         }
 
         public void DropedExpAndItem()
@@ -57,6 +76,14 @@ namespace gameRPG.BL.Controller
         {
             userController.CurrentUser.Experience += CurrentBoss.DropExp;
             userController.CurrentUser.Money += CurrentBoss.MoneyDrop;
+            if (IsWin)
+            {
+                userController.CurrentUser.Win += 1;
+            }
+            else
+            {
+                userController.CurrentUser.Loss += 1;
+            }
             if (CurrentBoss.Items != null)
             {
                 userController.CurrentUser.Items.AddRange(CurrentBoss.Items);
