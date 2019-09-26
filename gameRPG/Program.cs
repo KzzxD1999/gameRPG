@@ -26,7 +26,32 @@ namespace gameRPG
                 Console.WriteLine("Введіть вік");
                 int age;
                 if(int.TryParse(Console.ReadLine(), out age)) { }
-                userController.SetNewUserData(age, genderName);
+                Console.WriteLine("Виберіть расу");
+                int i = 0;
+                foreach (var item in userController.CurrentUser.Rase.NameArr)
+                {
+                    i++;
+                    Console.WriteLine($"{i}){item}");
+                }
+                int id = 0;
+                var key = Console.ReadKey();
+                switch (key.Key)
+                {
+                    case ConsoleKey.D1:
+                        id = 0;
+                        break;
+                    case ConsoleKey.D2:
+                        id = 1;
+                        break;
+                    case ConsoleKey.D3:
+                        id = 2;
+                        break;
+                    default:
+                        break;
+                }
+                userController.SetNewUserData(age, genderName, id);
+                
+
                 Console.WriteLine("Успішно створено");
             }
             ShowMenu();
@@ -406,9 +431,11 @@ namespace gameRPG
             Console.WriteLine($"Рівень: {userController1.CurrentUser.Level} \tДосвід:{userController1.CurrentUser.Experience}");
             Console.WriteLine($"До наступного рівня: {userController1.CurrentUser.ExpToUp - userController1.CurrentUser.Experience} досвіду");
             Console.WriteLine($"Вiк:{userController1.CurrentUser.Age}");
-            Console.WriteLine($"Стать:{userController1.CurrentUser.Gender.Name}");
+            Console.WriteLine($"Стать:{userController1.CurrentUser.Gender.Name} \tРаса: {userController1.CurrentUser.Rase.Name}");
             Console.WriteLine($"Здоров'я:{userController1.CurrentUser.HitPoint}\tМана:{userController1.CurrentUser.ManaPoint}");
             Console.WriteLine($"Атака:{userController1.CurrentUser.Attack}\tЗахист:{userController1.CurrentUser.Defence}");
+            Console.WriteLine($"Маг.атака:{userController1.CurrentUser.MagicAttack}\tМаг.захист:{userController1.CurrentUser.MagicDef}");
+
             Console.WriteLine($"Поточна вага предметів: {userController1.CurrentWeight} \tМаксимальна вага предметів: {userController1.CurrentUser.MaxWeight}");
             Console.WriteLine($"Кількість перемог над босами: {userController1.CurrentUser.Win}, кількість поразок: {userController1.CurrentUser.Loss}");
             if (itemController.CurrentUser.Items != null)

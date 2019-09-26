@@ -25,8 +25,12 @@ namespace gameRPG.BL
             CurrentUser = Users.SingleOrDefault(x => x.Name == name);
             if (CurrentUser == null)
             {
+                
+     
                 CurrentUser = new User(name);
+               
                 Users.Add(CurrentUser);
+                CurrentUser.Rase = new Rase();
                 IsNew = true;
                 Save();
 
@@ -48,20 +52,53 @@ namespace gameRPG.BL
             
         }
 
-        public void SetNewUserData(int age, string genderName, List<Item> items = null, List<Boss> bosses = null)
+        public void SetNewUserData(int age, string genderName, int raceId, List<Item> items = null, List<Boss> bosses = null)
         {
             ItemController itemController = new ItemController(CurrentUser);
             BossController bossController = new BossController(CurrentUser);
             CurrentUser.Age = age;
             CurrentUser.Gender = new Gender(RenameGender(genderName));
-            items = itemController.DefaultItems(CurrentUser.Name);
+            items = itemController.DefaultItems(CurrentUser.Name, raceId);
             CurrentUser.Items = items;
+            CurrentUser.Rase = new Rase(raceId);
+            SetValueForRace(raceId);
             bosses = bossController.AddBosess();
             CurrentUser.Bosses = bosses;
             itemController.SaveItems();
             bossController.Save();
             Save();
-           
+
+        }
+
+        private void SetValueForRace(int raceId)
+        {
+            switch (raceId)
+            {
+
+                case 0:
+                    CurrentUser.Attack = 11;
+                    CurrentUser.Defence = 14;
+                    CurrentUser.MagicAttack = 5;
+                    CurrentUser.MagicDef = 9;
+
+                    CurrentUser.ManaPoint = 100;
+                    break;
+                case 1:
+                    CurrentUser.MagicAttack = 12;
+                    CurrentUser.MagicDef = 8;
+                    CurrentUser.Attack = 5;
+                    CurrentUser.Defence = 6;
+                    CurrentUser.ManaPoint = 200;
+                    break;
+                case 2:
+                    CurrentUser.Attack = 17;
+                    CurrentUser.Defence = 7;
+                    CurrentUser.MagicAttack = 5;
+                    CurrentUser.MagicDef = 4;
+
+                    CurrentUser.ManaPoint = 100;
+                    break;
+            }
         }
 
         private string RenameGender(string name)
@@ -80,6 +117,7 @@ namespace gameRPG.BL
         }
         public void LvlUp()
         {
+            //TODO: Придумати, як піднімати стати персонажу, після підвищення рівня.
       
             if(CurrentUser.Experience >= CurrentUser.ExpToUp)
             {
@@ -90,16 +128,16 @@ namespace gameRPG.BL
                 CurrentUser.Experience = 0;
             }
         }
-        public void AddMoney()
-        {
-            Random random = new Random();
-            double money = random.Next(10, 100);
-            double exp = random.Next(10, 100);
-            CurrentUser.Money += money;
-            CurrentUser.Experience += exp;
-            LvlUp();
-            Console.WriteLine($"Гроші: {money}, Досвід: {exp}");
-            Save();
-        }
+        //public void AddMoney()
+        //{
+        //    Random random = new Random();
+        //    double money = random.Next(10, 100);
+        //    double exp = random.Next(10, 100);
+        //    CurrentUser.Money += money;
+        //    CurrentUser.Experience += exp;
+        //    LvlUp();
+        //    Console.WriteLine($"Гроші: {money}, Досвід: {exp}");
+        //    Save();
+        //}
     }
 }

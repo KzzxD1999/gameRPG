@@ -58,10 +58,28 @@ namespace gameRPG.BL.Controller
 
 
         }
-        public List<Item> DefaultItems(string userName)
+        public List<Item> DefaultItems(string userName, int raceId)
         {
-            Item item = new Item(1, "Меч", "Холодна зброя", userName, 14, 0, 4, 0, false, 136, 84);
-            Item item1 = new Item(2, "Щит", "Оборона", userName, 0, 14, 15, 0, false, 194, 111);
+            Item item = null;
+            Item item1 = null;
+            switch (raceId)
+            {   
+                case 0:
+                    item = new Item(1, "Меч", "Холодна зброя", userName, 14, 0, 3, 0, 4, 0, false, 136, 84);
+                    item1 = new Item(2, "Щит", "Оборона", userName, 0, 14, 0, 10, 15, 0, false, 194, 111);
+                    break;
+                case 1:
+                    item = new Item(1, "Посох", "Магічна зброя", userName, 4, 0, 15, 4, 4, 0, false, 136, 84);
+                    item1 = new Item(2, "Магічний щит", "Оборона", userName, 0, 6, 0, 13, 15, 0, false, 194, 111);
+                    break;
+                case 2:
+                    item = new Item(1, "Кинжал", "Холодна зброя", userName, 22, 2, 2, 0, 10, 0, false, 136, 84);
+                    item1 = new Item(2, "Шлем", "Оборона", userName, 0, 14, 0, 5, 15, 0, false, 194, 111);
+                    break;
+                default:
+                    break;
+            }
+
             CurrentUser.Weight += item.Weigth;
             CurrentUser.Weight += item1.Weigth;
             Items.Add(item);

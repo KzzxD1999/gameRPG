@@ -10,14 +10,16 @@ namespace gameRPG.BL.Models
     public class User
     {
       
-        //TODO: Створити кількість перемог, поразок
+      
         public string Name { get; set; }
         public int Age { get; set; }
         public double HitPoint { get; set; } = 100;
-        public double ManaPoint { get; set; } = 100;
-        public double Attack { get; set; } = 5;
+        public double ManaPoint { get; set; }
+        public double Attack { get; set; }
+        public double MagicAttack { get; set; }
+        public double MagicDef { get; set; }
         public Gender Gender { get; set; }
-        public double Defence { get; set; } = 1;
+        public double Defence { get; set; }
         public double Money { get; set; } = 0;
         public Item Item { get; set; }
         public List<Item> Items { get; set; }
@@ -30,6 +32,7 @@ namespace gameRPG.BL.Models
         public double ExpToUp { get; set; } = 50;
         public int Win { get; set; } = 0;
         public int Loss { get; set; } = 0;
+        public Rase Rase { get; set; }
         public User(string name)
         {
             Name = name;
@@ -61,7 +64,7 @@ namespace gameRPG.BL.Models
             Defence = defence;
             Items = items;
         }
-
+        
 
     }
 }

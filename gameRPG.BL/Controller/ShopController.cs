@@ -101,12 +101,15 @@ namespace gameRPG.BL.Controller
             Save(FILE_NAME, Items);
             
         }
+
+        //TODO: Зробити продаж вмінь.
         private void AddItem()
         {
+            //TODO: Додати предмети для всіх класів + хіли.
             List<Item> items = new List<Item>() {
-                new Item(3,"Стальна вуаль", "Шлем", CurrentUser.Name, 86, 0, 18, 98, false, 164, 183),
-                new Item(4, "Корона леорiка", "Шлем", CurrentUser.Name, 111, 0, 34, 135, false, 450, 289),
-                new Item(5, "Зазубренный меч Гризвольда", "Меч", CurrentUser.Name, 98, 32, 0, 78, false, 220, 211)
+                new Item(3,"Стальна вуаль", "Шлем", CurrentUser.Name, 86, 0, 2, 8, 18, 98, false, 164, 183),
+                new Item(4, "Корона леорiка", "Шлем", CurrentUser.Name, 111, 0, 0, 15, 34, 135, false, 450, 289),
+                new Item(5, "Зазубренный меч Гризвольда", "Меч", CurrentUser.Name, 98, 32, 18, 2, 0, 78, false, 220, 211)
             };
             Items.AddRange(items);
             Save();

@@ -55,7 +55,7 @@ namespace gameRPG.BL.Controller
 
         public void DropedExpAndItem()
         {
-            //TODO: ПРИДУМАТИ ЯК ПІДСИЛЮВАТИ БОСА;
+           
             UserController userController = new UserController(CurrentUser.Name);
             ItemController itemController = new ItemController(CurrentUser);
             BossController bossController = new BossController(CurrentBoss);
@@ -95,7 +95,7 @@ namespace gameRPG.BL.Controller
 
         private void SaveBoss(BossController bossController)
         {
-            //TODO: Придумати як оновлювати боса
+         
             Random random = new Random();
             int attack = random.Next(2, 6);
             int hitPoint = random.Next(10, 15);

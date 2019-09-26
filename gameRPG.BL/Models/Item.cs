@@ -5,7 +5,7 @@ namespace gameRPG.BL.Models
     [Serializable]
     public class Item
     {
-        public Item(int id, string name, string category, string userName, double attack, double defence, double hitPoint, double manaPoint, bool isEquipped, double weigth, double price)
+        public Item(int id, string name, string category, string userName, double attack, double defence, double magicAttack, double magicDefence, double hitPoint, double manaPoint, bool isEquipped, double weigth, double price)
         {
             if (string.IsNullOrWhiteSpace(category))
             {
@@ -18,11 +18,13 @@ namespace gameRPG.BL.Models
             }
 
             Id = id;
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Name = name ?? "Користувач 1";
             Category = category;
             UserName = userName;
             Attack = attack;
             Defence = defence;
+            MagicAttack = magicAttack;
+            MagicDefence = magicDefence;
             HitPoint = hitPoint;
             ManaPoint = manaPoint;
             IsEquipped = isEquipped;
@@ -35,6 +37,8 @@ namespace gameRPG.BL.Models
         public string Category { get; set; }
         public double Attack { get; set; }
         public double Defence { get; set; }
+        public double MagicAttack { get; set; }
+        public double MagicDefence { get; set; }
         public double HitPoint { get; set; }
         public string UserName { get; set; }
         public double ManaPoint { get; set; }
