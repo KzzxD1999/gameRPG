@@ -10,7 +10,7 @@ namespace gameRPG.BL.Models
     public class User
     {
       
-      
+       //TODO: Критичний удар
         public string Name { get; set; }
         public int Age { get; set; }
         public double HitPoint { get; set; } = 100;
@@ -33,6 +33,7 @@ namespace gameRPG.BL.Models
         public int Win { get; set; } = 0;
         public int Loss { get; set; } = 0;
         public Rase Rase { get; set; }
+        public List<Skill> Skills { get; set; }
         public User(string name)
         {
             Name = name;

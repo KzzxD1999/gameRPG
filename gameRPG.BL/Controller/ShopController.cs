@@ -13,24 +13,94 @@ namespace gameRPG.BL.Controller
     {
 
         public List<Item> Items { get; set; }
+        public List<Skill> Skills { get; set; }
+        public Skill Skill { get; set; }
+        public List<Skill> SkillsInShop { get; set; }
         public User CurrentUser { get; set; }
         public Item CurrentItem { get; set; }
-        public const string FILE_NAME = "shop.dat";
+        public const string ITEMS_FILE_NAME = "items_shop.dat";
+        public const string SKILLS_FILE_NAME = "skills_shop.dat";
         public double IncreaseInvetory { get; set; } = 500;
         public ShopController(User user)
         {
+            //TODO: Пофіксити зберігання предметів 
             Items = GetItemsInShop();
+            Skills = GetSkillsInShop();
+
             CurrentUser = user;
+            CurrentUser.Skills = Skills.FindAll(x => x.InShop == true && x.UserName == CurrentUser.Name);
             if (Items.Count <= 0)
             {
                 AddItem();
             }
+            else if(CurrentUser.Skills.Count <= 0)
+            {
+               
+                AddSkills(CurrentUser.Rase.Name);
+                CurrentUser.Skills = Skills.FindAll(x => x.InShop == true && x.UserName == CurrentUser.Name);
+            }
+            //TODO: Зробити щоб скіли в магазині були в кожного користувача свої
+
         }
 
+        private void AddSkills(string name)
+        {
+            List<Skill> skills = null;
+
+            switch (name)
+            {
+                case "Воїн":
+                    skills = new List<Skill>()
+                        {
+                            new Skill("Удар дракона", "Активний",CurrentUser.Name, 0, 22, 0, 0, 0,20,3, true),
+                            new Skill("Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7, true),
+
+
+                        };
+                    break;
+                case "Маг":
+                    skills = new List<Skill>()
+                        {
+                            //TODO: Заморожувати ворога
+                            new Skill("Заморожуючий удар", "Активний",CurrentUser.Name, 9,0,0,0,0,66,7,true ),
+                            new Skill("Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7,true),
+
+
+                        };
+                    break;
+                case "Розбійник":
+                    skills = new List<Skill>()
+                        {
+                            //TODO: Заморожувати ворога
+                            new Skill("Знімання броні", "Активний",CurrentUser.Name, 0,0,-5,-8, 0,0,4,true),
+                            new Skill("Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,38,20,7,true),
+
+
+                        };
+                    break;
+                default:
+                    break;
+            }
+        
+            Skills.AddRange(skills);
+            SaveSkills();
+        
+
+        }
+
+        private void SaveSkills()
+        {
+            Save(SKILLS_FILE_NAME, Skills);
+        }
+        
         private List<Item> GetItemsInShop()
         {
-            return Load<List<Item>>(FILE_NAME) ?? new List<Item>();
+            return Load<List<Item>>(ITEMS_FILE_NAME) ?? new List<Item>();
            
+        }
+        private List<Skill> GetSkillsInShop()
+        {
+            return Load<List<Skill>>(SKILLS_FILE_NAME) ?? new List<Skill>();
         }
         public void IncreaseInventory()
         {
@@ -98,7 +168,7 @@ namespace gameRPG.BL.Controller
         }
         private void Save()
         {
-            Save(FILE_NAME, Items);
+            Save(ITEMS_FILE_NAME, Items);
             
         }
 

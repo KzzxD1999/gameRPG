@@ -28,7 +28,7 @@ namespace gameRPG
                 if(int.TryParse(Console.ReadLine(), out age)) { }
                 Console.WriteLine("Виберіть расу");
                 int i = 0;
-                foreach (var item in userController.CurrentUser.Rase.NameArr)
+                foreach (var item in userController.CurrentUser.Rase.NameArr.Values)
                 {
                     i++;
                     Console.WriteLine($"{i}){item}");
@@ -38,13 +38,13 @@ namespace gameRPG
                 switch (key.Key)
                 {
                     case ConsoleKey.D1:
-                        id = 0;
-                        break;
-                    case ConsoleKey.D2:
                         id = 1;
                         break;
-                    case ConsoleKey.D3:
+                    case ConsoleKey.D2:
                         id = 2;
+                        break;
+                    case ConsoleKey.D3:
+                        id = 3;
                         break;
                     default:
                         break;
@@ -66,10 +66,11 @@ namespace gameRPG
             {
                 Console.WriteLine("-------------------------------------");
                 Console.WriteLine("1)Iнформацiя про персонажа");
-                Console.WriteLine("2)Iнвентар");
-                Console.WriteLine("3)Битва");
-                Console.WriteLine("4)Магазин");
-                Console.WriteLine("5)Вихiд");
+                Console.WriteLine("2)Вміння");
+                Console.WriteLine("3)Iнвентар");
+                Console.WriteLine("4)Битва");
+                Console.WriteLine("5)Магазин");
+                Console.WriteLine("6)Вихiд");
                 var key = Console.ReadKey();
                 switch (key.Key)
                 {
@@ -77,21 +78,42 @@ namespace gameRPG
                         GetUserInformation();
                         break;
                     case ConsoleKey.D2:
-                        GetInventoryInformation();
+                        GetSkills();
                         break;
                     case ConsoleKey.D3:
-                        Battle();
+                        GetInventoryInformation();
                         break;
                     case ConsoleKey.D4:
-                        Shop();
+                        Battle();
                         break;
                     case ConsoleKey.D5:
+                        Shop();
+                        break;
+                    case ConsoleKey.D6:
                         Exit();
                         break;
                     default:
                         GetUserInformation();
                         break;
                 }
+            }
+        }
+
+        private static void GetSkills()
+        {
+            UserController userController = new UserController(userName);
+            foreach (var item in userController.CurrentUser.Skills)
+            {
+                    Console.WriteLine($"Назва: {item.Name}");
+                    Console.WriteLine($"Здоров'я: {item.HitPoint}");
+                    Console.WriteLine($"Мана: {item.ManaPoint}");
+                    Console.WriteLine($"Фіз.шкода: {item.PhysicalDamage}");
+                    Console.WriteLine($"Маг.шкода: {item.MagicDamage}");
+                    Console.WriteLine($"Фіз.захист: {item.PhysicalDefence}");
+                    Console.WriteLine($"Маг.захист: {item.MagicDefence}");
+                    Console.WriteLine($"Перезарядка: {item.Recharge}");
+                    Console.WriteLine("-------------------------------------");
+                
             }
         }
 
@@ -112,8 +134,10 @@ namespace gameRPG
                 Console.WriteLine("1)Показати всi предмети");
                 Console.WriteLine("2)Купити предмет");
                 Console.WriteLine("3)Деталi про предмет");
-                Console.WriteLine($"4)Розширити інвентар на 500, ціна:{userController1.CurrentUser.InvetoryPrice} ");
-                Console.WriteLine("5)Вихiд до головного меню");
+                Console.WriteLine("4)Показати всі вміння");
+                Console.WriteLine("5)Купити вміння");
+                Console.WriteLine($"6)Розширити інвентар на 500, ціна:{userController1.CurrentUser.InvetoryPrice} ");
+                Console.WriteLine("7)Вихiд до головного меню");
                 var key = Console.ReadKey();
                 switch (key.Key)
                 {
@@ -127,10 +151,15 @@ namespace gameRPG
                         ItemDetails();
                         break;
                     case ConsoleKey.D4:
+                        GetSkillsInShop();
+                        break;
+                    case ConsoleKey.D5:
+                        break;
+                    case ConsoleKey.D6:
                         IncreaseInventory();
                         ShowMenu();
                         break;
-                    case ConsoleKey.D5:
+                    case ConsoleKey.D7:
                         ShowMenu();
                         break;
                     default:
@@ -139,6 +168,25 @@ namespace gameRPG
                         Console.ForegroundColor = ConsoleColor.White;
                         break;
                 }
+            }
+        }
+
+        private static void GetSkillsInShop()
+        {
+            //TODO: Виводити правильно дані про вміння в магазині
+            ShopController shopController = new ShopController(userController.CurrentUser);
+
+            foreach (var item in shopController.CurrentUser.Skills)
+            {
+                Console.WriteLine($"Назва: {item.Name}");
+                Console.WriteLine($"Здоров'я: {item.HitPoint}");
+                Console.WriteLine($"Мана: {item.ManaPoint}");
+                Console.WriteLine($"Фіз.шкода: {item.PhysicalDamage}");
+                Console.WriteLine($"Маг.шкода: {item.MagicDamage}");
+                Console.WriteLine($"Фіз.захист: {item.PhysicalDefence}");
+                Console.WriteLine($"Маг.захист: {item.MagicDefence}");
+                Console.WriteLine($"Перезарядка: {item.Recharge}");
+                Console.WriteLine("-------------------------------------");
             }
         }
 
