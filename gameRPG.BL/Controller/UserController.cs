@@ -80,7 +80,7 @@ namespace gameRPG.BL
             switch (raceId)
             {
 
-                case 0:
+                case 1:
                     CurrentUser.Attack = 11;
                     CurrentUser.Defence = 14;
                     CurrentUser.MagicAttack = 5;
@@ -88,14 +88,14 @@ namespace gameRPG.BL
 
                     CurrentUser.ManaPoint = 100;
                     break;
-                case 1:
+                case 2:
                     CurrentUser.MagicAttack = 12;
                     CurrentUser.MagicDef = 8;
                     CurrentUser.Attack = 5;
                     CurrentUser.Defence = 6;
                     CurrentUser.ManaPoint = 200;
                     break;
-                case 2:
+                case 3:
                     CurrentUser.Attack = 17;
                     CurrentUser.Defence = 7;
                     CurrentUser.MagicAttack = 5;

@@ -5,7 +5,7 @@ namespace gameRPG.BL.Models
     [Serializable]
     public class Item
     {
-        public Item(int id, string name, string category, string userName, double attack, double defence, double magicAttack, double magicDefence, double hitPoint, double manaPoint, bool isEquipped, double weigth, double price)
+        public Item(int id, string name, string category, string userName, double attack, double defence, double magicAttack, double magicDefence, double hitPoint, double manaPoint, bool isEquipped, double weigth, double price, bool isShop)
         {
             if (string.IsNullOrWhiteSpace(category))
             {
@@ -30,6 +30,7 @@ namespace gameRPG.BL.Models
             IsEquipped = isEquipped;
             Weigth = weigth;
             Price = price;
+            IsShop = isShop;
         }
 
         public int Id { get; set; }
@@ -45,7 +46,7 @@ namespace gameRPG.BL.Models
         public bool IsEquipped { get; set; }
         public double Weigth { get; set; }
         public double Price { get; set; }
-
+        public bool IsShop { get; set; }
         
 
         

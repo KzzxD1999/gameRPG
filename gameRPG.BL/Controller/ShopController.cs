@@ -29,17 +29,22 @@ namespace gameRPG.BL.Controller
 
             CurrentUser = user;
             CurrentUser.Skills = Skills.FindAll(x => x.InShop == true && x.UserName == CurrentUser.Name);
-            if (Items.Count <= 0)
+            CurrentUser.Items = Items.FindAll(x => x.IsShop == true && x.UserName == CurrentUser.Name);
+            //TODO: Додавати предмети в магазин при створенні користувача
+            if (CurrentUser.Items.Count <= 0)
             {
-                AddItem();
+                AddItem(CurrentUser.Rase.Name);
+                CurrentUser.Items = Items.FindAll(x => x.IsShop == true && x.UserName == CurrentUser.Name);
+
             }
             else if(CurrentUser.Skills.Count <= 0)
             {
                
                 AddSkills(CurrentUser.Rase.Name);
+                //TODO: придумати щось з цим рядком
                 CurrentUser.Skills = Skills.FindAll(x => x.InShop == true && x.UserName == CurrentUser.Name);
             }
-            //TODO: Зробити щоб скіли в магазині були в кожного користувача свої
+            
 
         }
 
@@ -132,7 +137,7 @@ namespace gameRPG.BL.Controller
             ItemController itemController = new ItemController(CurrentUser);
             while (true)
             {
-                CurrentItem = Items.Find(x => x.Id == id);
+                CurrentItem = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
      
                 if(CurrentItem != null)
                 {
@@ -173,14 +178,40 @@ namespace gameRPG.BL.Controller
         }
 
         //TODO: Зробити продаж вмінь.
-        private void AddItem()
+        private void AddItem(string name)
         {
+            List<Item> items = null;
+            switch (name)
+            {
+                case "Воїн":
+                    items = new List<Item>()
+                    {
+                         new Item(3,"Стальна вуаль", "Шлем", CurrentUser.Name, 86, 0, 2, 8, 18, 98, false, 164, 183, true),
+                         new Item(4, "Корона леорiка", "Шлем", CurrentUser.Name, 111, 0, 0, 15, 34, 135, false, 450, 289,true),
+                         new Item(5, "Зазубренный меч Гризвольда", "Меч", CurrentUser.Name, 98, 32, 18, 2, 0, 78, false, 220, 211,true)
+
+                    };
+                    break;
+                case "Маг":
+                    items = new List<Item>()
+                    {
+                         new Item(3,"Звездный огонь", "Посох", CurrentUser.Name, 8, 0, 33, 2, 11, 120, false, 86, 141, true),
+                         new Item(4, "Феска", "Шлем", CurrentUser.Name, 0, 15, 15, 32, 21, 144, false, 148, 250,true),
+                         new Item(5, "Грубые сыромятные штаны", "Штани", CurrentUser.Name, 0, 17, 2, 26, 11, 99, false, 114, 111,true)
+
+                    };
+                    break;
+                case "Розбійник":
+                    items = new List<Item>()
+                    {
+                        new Item(3, "Секатор", "Кинжали", CurrentUser.Name, 38, 1, 0, 0, 6, 80, false, 104, 191, true),
+                         new Item(4, "Корона нежити", "Шлем", CurrentUser.Name, 0, 18, 0, 14, 18, 64, false, 110, 200, true),
+                         new Item(5, "Кожаные штаны", "Штани", CurrentUser.Name, 0, 22, 1, 12, 14, 46, false, 99, 178, true)
+
+                    };
+                    break;
+            }
             //TODO: Додати предмети для всіх класів + хіли.
-            List<Item> items = new List<Item>() {
-                new Item(3,"Стальна вуаль", "Шлем", CurrentUser.Name, 86, 0, 2, 8, 18, 98, false, 164, 183),
-                new Item(4, "Корона леорiка", "Шлем", CurrentUser.Name, 111, 0, 0, 15, 34, 135, false, 450, 289),
-                new Item(5, "Зазубренный меч Гризвольда", "Меч", CurrentUser.Name, 98, 32, 18, 2, 0, 78, false, 220, 211)
-            };
             Items.AddRange(items);
             Save();
         }

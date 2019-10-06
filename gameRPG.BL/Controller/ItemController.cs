@@ -65,16 +65,16 @@ namespace gameRPG.BL.Controller
             switch (raceId)
             {   
                 case 1:
-                    item = new Item(1, "Меч", "Холодна зброя", userName, 14, 0, 3, 0, 4, 0, false, 136, 84);
-                    item1 = new Item(2, "Щит", "Оборона", userName, 0, 14, 0, 10, 15, 0, false, 194, 111);
+                    item = new Item(1, "Меч", "Холодна зброя", userName, 14, 0, 3, 0, 4, 0, false, 136, 84, false);
+                    item1 = new Item(2, "Щит", "Оборона", userName, 0, 14, 0, 10, 15, 0, false, 194, 111, false);
                     break;
                 case 2:
-                    item = new Item(1, "Посох", "Магічна зброя", userName, 4, 0, 15, 4, 4, 0, false, 136, 84);
-                    item1 = new Item(2, "Магічний щит", "Оборона", userName, 0, 6, 0, 13, 15, 0, false, 194, 111);
+                    item = new Item(1, "Посох", "Магічна зброя", userName, 4, 0, 15, 4, 4, 0, false, 136, 84, false);
+                    item1 = new Item(2, "Магічний щит", "Оборона", userName, 0, 6, 0, 13, 15, 0, false, 194, 111,false);
                     break;
                 case 3:
-                    item = new Item(1, "Кинжал", "Холодна зброя", userName, 22, 2, 2, 0, 10, 0, false, 136, 84);
-                    item1 = new Item(2, "Шлем", "Оборона", userName, 0, 14, 0, 5, 15, 0, false, 194, 111);
+                    item = new Item(1, "Кинжал", "Холодна зброя", userName, 22, 2, 2, 0, 10, 0, false, 136, 84,false);
+                    item1 = new Item(2, "Шлем", "Оборона", userName, 0, 14, 0, 5, 15, 0, false, 194, 111,false);
                     break;
                 default:
                     break;

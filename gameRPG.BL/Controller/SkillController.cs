@@ -23,7 +23,7 @@ namespace gameRPG.BL.Controller
             List<Skill> skills = null;
             switch (raceId)
             {
-                case 0:
+                case 1:
                     skills = new List<Skill>()
                     {
                         //TODO: Зробити АКТИВНЕ ВМІННЯ вибором
@@ -32,7 +32,7 @@ namespace gameRPG.BL.Controller
 
                     };
                     break;
-                case 1:
+                case 2:
                     skills = new List<Skill>()
                     {
                         //TODO: Зробити АКТИВНЕ ВМІННЯ вибором
@@ -41,7 +41,7 @@ namespace gameRPG.BL.Controller
 
                     };
                     break;
-                case 2:
+                case 3:
                      skills = new List<Skill>()
                     {
                         //TODO: Зробити АКТИВНЕ ВМІННЯ вибором

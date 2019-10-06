@@ -222,7 +222,7 @@ namespace gameRPG
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Кiлькiсть предметiв: {shopController.Items.Count()}");
             Console.ForegroundColor = ConsoleColor.White;
-            foreach (var item in shopController.Items)
+            foreach (var item in shopController.CurrentUser.Items)
             {
                 Console.WriteLine("-----------------------");
                 Console.WriteLine(item);
