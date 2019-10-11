@@ -26,7 +26,7 @@ namespace gameRPG.BL.Controller
                 case 1:
                     skills = new List<Skill>()
                     {
-                        //TODO: Зробити АКТИВНЕ ВМІННЯ вибором
+          
                         new Skill("Підняти броню", "Активне вміння",CurrentUser.Name, 0, 0, 4, 9, 0, 0, 15,false),
                         new Skill("Відновити HP", "Активне вміння",CurrentUser.Name, 0,0,0,0,35,0, 25,false )
 
@@ -44,7 +44,7 @@ namespace gameRPG.BL.Controller
                 case 3:
                      skills = new List<Skill>()
                     {
-                        //TODO: Зробити АКТИВНЕ ВМІННЯ вибором
+       
                         new Skill("Підняти атакау", "Активне вміння",CurrentUser.Name, 0, 18, 0,0, 0, 0, 22,false)
                         
                     };

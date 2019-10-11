@@ -104,16 +104,7 @@ namespace gameRPG
             UserController userController = new UserController(userName);
             foreach (var item in userController.CurrentUser.Skills)
             {
-                    Console.WriteLine($"Назва: {item.Name}");
-                    Console.WriteLine($"Здоров'я: {item.HitPoint}");
-                    Console.WriteLine($"Мана: {item.ManaPoint}");
-                    Console.WriteLine($"Фіз.шкода: {item.PhysicalDamage}");
-                    Console.WriteLine($"Маг.шкода: {item.MagicDamage}");
-                    Console.WriteLine($"Фіз.захист: {item.PhysicalDefence}");
-                    Console.WriteLine($"Маг.захист: {item.MagicDefence}");
-                    Console.WriteLine($"Перезарядка: {item.Recharge}");
-                    Console.WriteLine("-------------------------------------");
-                
+                    CheckSkills(item);
             }
         }
 
@@ -172,22 +163,34 @@ namespace gameRPG
         }
 
         private static void GetSkillsInShop()
-        {
-            //TODO: Виводити правильно дані про вміння в магазині
+        { 
             ShopController shopController = new ShopController(userController.CurrentUser);
-
             foreach (var item in shopController.CurrentUser.Skills)
             {
-                Console.WriteLine($"Назва: {item.Name}");
-                Console.WriteLine($"Здоров'я: {item.HitPoint}");
-                Console.WriteLine($"Мана: {item.ManaPoint}");
-                Console.WriteLine($"Фіз.шкода: {item.PhysicalDamage}");
-                Console.WriteLine($"Маг.шкода: {item.MagicDamage}");
-                Console.WriteLine($"Фіз.захист: {item.PhysicalDefence}");
-                Console.WriteLine($"Маг.захист: {item.MagicDefence}");
-                Console.WriteLine($"Перезарядка: {item.Recharge}");
-                Console.WriteLine("-------------------------------------");
+                CheckSkills(item);
             }
+        }
+
+        private static void CheckSkills(Skill item)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine($"Назва: {item.Name}");
+            if (item.HitPoint != 0)
+                Console.WriteLine($"Здоров'я: {item.HitPoint}");
+            if (item.ManaPoint != 0)
+                Console.WriteLine($"Мана: {item.ManaPoint}");
+            if (item.PhysicalDamage != 0)
+                Console.WriteLine($"Фіз.шкода: {item.PhysicalDamage}");
+            if (item.MagicDamage != 0)
+                Console.WriteLine($"Маг.шкода: {item.MagicDamage}");
+            if (item.PhysicalDefence != 0)
+                Console.WriteLine($"Фіз.захист: {item.PhysicalDefence}");
+            if (item.MagicDefence != 0)
+                Console.WriteLine($"Маг.захист: {item.MagicDefence}");
+            Console.WriteLine($"Перезарядка: {item.Recharge}");
+            Console.WriteLine("-------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void IncreaseInventory()

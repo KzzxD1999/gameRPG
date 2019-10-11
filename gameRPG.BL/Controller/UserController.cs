@@ -54,18 +54,23 @@ namespace gameRPG.BL
             
         }
 
-        public void SetNewUserData(int age, string genderName, int raceId, List<Skill> skills = null, List<Item> items = null, List<Boss> bosses = null)
+        public void SetNewUserData(int age, string genderName, int raceId, List<Skill> skills = null, List<Item> items = null, List<Item>itemsInShop =null, List<Skill> skillsInShop=null,  List<Boss> bosses = null)
         {
             ItemController itemController = new ItemController(CurrentUser);
             BossController bossController = new BossController(CurrentUser);
             SkillController skillController = new SkillController(CurrentUser);
+            ShopController shopController = new ShopController(CurrentUser);
             CurrentUser.Age = age;
             CurrentUser.Gender = new Gender(RenameGender(genderName));
             items = itemController.DefaultItems(CurrentUser.Name, raceId);
             skills = skillController.AddSkills(raceId);
+       
+
             CurrentUser.Items = items;
             CurrentUser.Rase = new Rase(raceId);
             CurrentUser.Skills = skills;
+            itemsInShop = shopController.AddItem(raceId);
+            skillsInShop = shopController.AddSkills(raceId);
             SetValueForRace(raceId);
             bosses = bossController.AddBosess();
             CurrentUser.Bosses = bosses;
@@ -126,23 +131,19 @@ namespace gameRPG.BL
       
             if(CurrentUser.Experience >= CurrentUser.ExpToUp)
             {
+
                 double remainderOfExp = CurrentUser.Experience % CurrentUser.ExpToUp;
                 CurrentUser.Level += 1;
+                CurrentUser.HitPoint += Math.Round((CurrentUser.HitPoint * CurrentUser.Level) / (5.6 * CurrentUser.Level));
                 CurrentUser.ExpToUp += CurrentUser.ExpToUp * 1.2;
+                
+
+
+
                 CurrentUser.ExpToUp -= remainderOfExp;
                 CurrentUser.Experience = 0;
             }
         }
-        //public void AddMoney()
-        //{
-        //    Random random = new Random();
-        //    double money = random.Next(10, 100);
-        //    double exp = random.Next(10, 100);
-        //    CurrentUser.Money += money;
-        //    CurrentUser.Experience += exp;
-        //    LvlUp();
-        //    Console.WriteLine($"Гроші: {money}, Досвід: {exp}");
-        //    Save();
-        //}
+       
     }
 }

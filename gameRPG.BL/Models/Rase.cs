@@ -6,6 +6,7 @@ namespace gameRPG.BL.Models
     [Serializable]
     public class Rase
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         //public string[] NameArr { get; set; } = { "Воїн", "Маг", "Розбійник" };
@@ -23,6 +24,8 @@ namespace gameRPG.BL.Models
         {
 
             Name = NameArr[number];
+            Id = number;
+        
         }
         public Rase()
         {

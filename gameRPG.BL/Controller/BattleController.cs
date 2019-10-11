@@ -19,19 +19,20 @@ namespace gameRPG.BL.Controller
         {
             CurrentUser = user;
             CurrentBoss = boss;
-            //TODO: Як враховувати броню ??
-            BossHpAndDef = CurrentBoss.HitPoint + (CurrentBoss.Defence * 0.2);
-            UserHpAndDef = CurrentUser.HitPoint + (CurrentUser.Defence * 0.3);
+            //TODO: Як враховувати броню ?? перевірка значень тому що вилітає програма
+            BossHpAndDef = Math.Round(CurrentBoss.HitPoint + (CurrentBoss.Defence * 0.1), 2);
+            UserHpAndDef = Math.Round(CurrentUser.HitPoint + (CurrentUser.Defence * 0.9),2);
         }
        
 
   
-
+        //TODO: Додати користувачу по замовчуванню декілька аптечок, для можливості відхілу
         public void Attack()
         {
             BossHpAndDef -= CurrentUser.Attack;
             UserHpAndDef -= CurrentBoss.Attack;
-            
+            Math.Round(UserHpAndDef, 2);
+            Math.Round(BossHpAndDef, 2);
             if (UserHpAndDef <= 0)
             {
                 

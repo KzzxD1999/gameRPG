@@ -23,38 +23,24 @@ namespace gameRPG.BL.Controller
         public double IncreaseInvetory { get; set; } = 500;
         public ShopController(User user)
         {
-            //TODO: Пофіксити зберігання предметів 
+           
             Items = GetItemsInShop();
             Skills = GetSkillsInShop();
 
             CurrentUser = user;
             CurrentUser.Skills = Skills.FindAll(x => x.InShop == true && x.UserName == CurrentUser.Name);
             CurrentUser.Items = Items.FindAll(x => x.IsShop == true && x.UserName == CurrentUser.Name);
-            //TODO: Додавати предмети в магазин при створенні користувача
-            if (CurrentUser.Items.Count <= 0)
-            {
-                AddItem(CurrentUser.Rase.Name);
-                CurrentUser.Items = Items.FindAll(x => x.IsShop == true && x.UserName == CurrentUser.Name);
-
-            }
-            else if(CurrentUser.Skills.Count <= 0)
-            {
-               
-                AddSkills(CurrentUser.Rase.Name);
-                //TODO: придумати щось з цим рядком
-                CurrentUser.Skills = Skills.FindAll(x => x.InShop == true && x.UserName == CurrentUser.Name);
-            }
             
 
         }
 
-        private void AddSkills(string name)
+        public List<Skill> AddSkills(int id)
         {
             List<Skill> skills = null;
 
-            switch (name)
+            switch (id)
             {
-                case "Воїн":
+                case 1:
                     skills = new List<Skill>()
                         {
                             new Skill("Удар дракона", "Активний",CurrentUser.Name, 0, 22, 0, 0, 0,20,3, true),
@@ -63,7 +49,7 @@ namespace gameRPG.BL.Controller
 
                         };
                     break;
-                case "Маг":
+                case 2:
                     skills = new List<Skill>()
                         {
                             //TODO: Заморожувати ворога
@@ -73,7 +59,7 @@ namespace gameRPG.BL.Controller
 
                         };
                     break;
-                case "Розбійник":
+                case 3:
                     skills = new List<Skill>()
                         {
                             //TODO: Заморожувати ворога
@@ -89,7 +75,7 @@ namespace gameRPG.BL.Controller
         
             Skills.AddRange(skills);
             SaveSkills();
-        
+            return Skills;
 
         }
 
@@ -171,19 +157,19 @@ namespace gameRPG.BL.Controller
                 }
             }
         }
-        private void Save()
+        public void Save()
         {
             Save(ITEMS_FILE_NAME, Items);
             
         }
 
         //TODO: Зробити продаж вмінь.
-        private void AddItem(string name)
+        public List<Item> AddItem(int id)
         {
             List<Item> items = null;
-            switch (name)
+            switch (id)
             {
-                case "Воїн":
+                case 1:
                     items = new List<Item>()
                     {
                          new Item(3,"Стальна вуаль", "Шлем", CurrentUser.Name, 86, 0, 2, 8, 18, 98, false, 164, 183, true),
@@ -192,7 +178,7 @@ namespace gameRPG.BL.Controller
 
                     };
                     break;
-                case "Маг":
+                case 2:
                     items = new List<Item>()
                     {
                          new Item(3,"Звездный огонь", "Посох", CurrentUser.Name, 8, 0, 33, 2, 11, 120, false, 86, 141, true),
@@ -201,7 +187,7 @@ namespace gameRPG.BL.Controller
 
                     };
                     break;
-                case "Розбійник":
+                case 3:
                     items = new List<Item>()
                     {
                         new Item(3, "Секатор", "Кинжали", CurrentUser.Name, 38, 1, 0, 0, 6, 80, false, 104, 191, true),
@@ -214,6 +200,7 @@ namespace gameRPG.BL.Controller
             //TODO: Додати предмети для всіх класів + хіли.
             Items.AddRange(items);
             Save();
+            return Items;
         }
 
     }
