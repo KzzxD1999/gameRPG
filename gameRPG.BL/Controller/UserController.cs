@@ -64,8 +64,6 @@ namespace gameRPG.BL
             CurrentUser.Gender = new Gender(RenameGender(genderName));
             items = itemController.DefaultItems(CurrentUser.Name, raceId);
             skills = skillController.AddSkills(raceId);
-       
-
             CurrentUser.Items = items;
             CurrentUser.Rase = new Rase(raceId);
             CurrentUser.Skills = skills;
@@ -90,7 +88,6 @@ namespace gameRPG.BL
                     CurrentUser.Defence = 14;
                     CurrentUser.MagicAttack = 5;
                     CurrentUser.MagicDef = 9;
-
                     CurrentUser.ManaPoint = 100;
                     break;
                 case 2:
@@ -105,7 +102,6 @@ namespace gameRPG.BL
                     CurrentUser.Defence = 7;
                     CurrentUser.MagicAttack = 5;
                     CurrentUser.MagicDef = 4;
-
                     CurrentUser.ManaPoint = 100;
                     break;
             }
@@ -134,7 +130,37 @@ namespace gameRPG.BL
 
                 double remainderOfExp = CurrentUser.Experience % CurrentUser.ExpToUp;
                 CurrentUser.Level += 1;
-                CurrentUser.HitPoint += Math.Round((CurrentUser.HitPoint * CurrentUser.Level) / (5.6 * CurrentUser.Level));
+                switch (CurrentUser.Rase.Id)
+                {
+                    case 1:
+                        CurrentUser.HitPoint += Math.Round((CurrentUser.HitPoint * CurrentUser.Level) / (8.6 + CurrentUser.Level));
+                        CurrentUser.Attack += Math.Round((CurrentUser.Attack * CurrentUser.Level) / (11.8 + CurrentUser.Level));
+                        CurrentUser.Defence += Math.Round((CurrentUser.Defence * CurrentUser.Level) / (9.9 + CurrentUser.Level));
+                        CurrentUser.MagicAttack += Math.Round((CurrentUser.MagicAttack * CurrentUser.Level) / (13.8 + CurrentUser.Level));
+                        CurrentUser.MagicDef += Math.Round((CurrentUser.MagicDef * CurrentUser.Level) / (9.9 + CurrentUser.Level));
+                        CurrentUser.ManaPoint += Math.Round((CurrentUser.ManaPoint * CurrentUser.Level) / (8.8 + CurrentUser.Level));
+                        break;
+                    case 2:
+                        CurrentUser.HitPoint += Math.Round((CurrentUser.HitPoint * CurrentUser.Level) / (11.8 + CurrentUser.Level));
+                        CurrentUser.Attack += Math.Round((CurrentUser.Attack * CurrentUser.Level) / (13.8 + CurrentUser.Level));
+                        CurrentUser.Defence += Math.Round((CurrentUser.Defence * CurrentUser.Level) / (10.9 + CurrentUser.Level));
+                        CurrentUser.MagicAttack += Math.Round((CurrentUser.MagicAttack * CurrentUser.Level) / (7.4 + CurrentUser.Level));
+                        CurrentUser.MagicDef += Math.Round((CurrentUser.MagicDef * CurrentUser.Level) / (6.9 + CurrentUser.Level));
+                        CurrentUser.ManaPoint += Math.Round((CurrentUser.ManaPoint * CurrentUser.Level) / (4.8 + CurrentUser.Level));
+                        break;
+                    case 3:
+                        CurrentUser.HitPoint += Math.Round((CurrentUser.HitPoint * CurrentUser.Level) / (9.7 + CurrentUser.Level));
+                        CurrentUser.Attack += Math.Round((CurrentUser.Attack * CurrentUser.Level) / (6.6 + CurrentUser.Level));
+                        CurrentUser.Defence += Math.Round((CurrentUser.Defence * CurrentUser.Level) / (10.1 + CurrentUser.Level));
+                        CurrentUser.MagicAttack += Math.Round((CurrentUser.MagicAttack * CurrentUser.Level) / (13.4 + CurrentUser.Level));
+                        CurrentUser.MagicDef += Math.Round((CurrentUser.MagicDef * CurrentUser.Level) / (12.9 + CurrentUser.Level));
+                        CurrentUser.ManaPoint += Math.Round((CurrentUser.ManaPoint * CurrentUser.Level) / (11.8 + CurrentUser.Level));
+                        break;
+                    default:
+                        break;
+                }
+               
+
                 CurrentUser.ExpToUp += CurrentUser.ExpToUp * 1.2;
                 
 

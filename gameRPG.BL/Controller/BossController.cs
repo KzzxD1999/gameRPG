@@ -33,7 +33,8 @@ namespace gameRPG.BL.Controller
             CurrentBoss = boss;
             
         }
-        public Boss FindBossById<T>(int id, User user)
+       
+        public Boss FindBossById(int id, User user)
         {
           
             Bosses.FirstOrDefault(x => x.Id == id && x.UserName == user.Name);
