@@ -60,11 +60,11 @@ namespace gameRPG.BL.Controller
             UserController userController = new UserController(CurrentUser.Name);
             ItemController itemController = new ItemController(CurrentUser);
             BossController bossController = new BossController(CurrentBoss);
-            
+            Messages($"Ви отримали: {bossController.CurrentBoss.MoneyDrop} - грошей, {CurrentBoss.DropExp} - досвіду", true);
+
             SaveUser(userController, itemController);
             SaveBoss(bossController);
-            Messages($"Ви отримали: {CurrentBoss.MoneyDrop} - грошей, {CurrentBoss.DropExp} - досвіду", true);
-            if (CurrentBoss.Items != null)
+           if (CurrentBoss.Items != null)
             {
                 foreach (var item in CurrentBoss.Items)
                 {
@@ -109,6 +109,16 @@ namespace gameRPG.BL.Controller
             bossController.CurrentBoss.DropExp += dropExp;
             bossController.CurrentBoss.MoneyDrop += dropMoney;
             bossController.Update(CurrentBoss);
+        }
+
+        public void EarlyCompletion()
+        {
+            UserController userController = new UserController(CurrentUser.Name);
+            userController.CurrentUser.Loss += 1;
+            userController.Save();
+            Messages($"Користувач {CurrentUser.Name} програв", false);
+            
+
         }
     }
 }

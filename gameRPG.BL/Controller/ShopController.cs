@@ -16,6 +16,7 @@ namespace gameRPG.BL.Controller
         public List<Skill> Skills { get; set; }
         public Skill Skill { get; set; }
         public List<Skill> SkillsInShop { get; set; }
+
         public User CurrentUser { get; set; }
         public Item CurrentItem { get; set; }
         public const string ITEMS_FILE_NAME = "items_shop.dat";
@@ -43,8 +44,8 @@ namespace gameRPG.BL.Controller
                 case 1:
                     skills = new List<Skill>()
                         {
-                            new Skill("Удар дракона", "Активний",CurrentUser.Name, 0, 22, 0, 0, 0,20,3, true),
-                            new Skill("Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7, true),
+                            new Skill(3,"Удар дракона", "Активний",CurrentUser.Name, 0, 22, 0, 0, 0,20,3, true, 1, 250),
+                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7, true, 15, 1500),
 
 
                         };
@@ -53,8 +54,8 @@ namespace gameRPG.BL.Controller
                     skills = new List<Skill>()
                         {
                             //TODO: Заморожувати ворога
-                            new Skill("Заморожуючий удар", "Активний",CurrentUser.Name, 9,0,0,0,0,66,7,true ),
-                            new Skill("Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7,true),
+                            new Skill(3,"Заморожуючий удар", "Активний",CurrentUser.Name, 9,0,0,0,0,66,7,true, 1, 250),
+                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7,true, 15, 1500),
 
 
                         };
@@ -62,9 +63,9 @@ namespace gameRPG.BL.Controller
                 case 3:
                     skills = new List<Skill>()
                         {
-                            //TODO: Заморожувати ворога
-                            new Skill("Знімання броні", "Активний",CurrentUser.Name, 0,0,-5,-8, 0,0,4,true),
-                            new Skill("Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,38,20,7,true),
+                            
+                            new Skill(3,"Знімання броні", "Активний",CurrentUser.Name, 0,0,-5,-8, 0,0,4,true, 1, 150),
+                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,38,20,7,true, 10, 1200),
 
 
                         };
@@ -117,6 +118,45 @@ namespace gameRPG.BL.Controller
             userController.Save();
         }
 
+
+
+
+        public void BuySkill(int id)
+        {
+            UserController userController = new UserController(CurrentUser.Name);
+            SkillController skillController = new SkillController(CurrentUser);
+            while (true)
+            {
+                Skill = Skills.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
+
+                if (Skill != null)
+                {
+                    Skill.UserName = CurrentUser.Name;
+                    if (Skill.Price > CurrentUser.Money)
+                    {
+
+                        Messages($"Недостатнь коштів на рахунку: {CurrentUser.Money}", false);
+                    }
+                    else
+                    {
+
+                         
+                            userController.CurrentUser.Money -= Skill.Price;
+                            userController.CurrentUser.Skills.Add(Skill);
+                            Skill = Skills.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
+                            Skills.Remove(Skill);
+                            userController.Save();
+                            SaveSkills();
+                            Messages($"Ви успішно купили: {Skill.Name}", true);
+                            break;
+                        
+
+                    }
+                }
+            }
+        }
+
+
         public void BuyItem(int id)
         {
             UserController userController = new UserController(CurrentUser.Name);
@@ -163,7 +203,7 @@ namespace gameRPG.BL.Controller
             
         }
 
-        //TODO: Зробити продаж вмінь.
+   
         public List<Item> AddItem(int id)
         {
             List<Item> items = null;
@@ -197,7 +237,7 @@ namespace gameRPG.BL.Controller
                     };
                     break;
             }
-            //TODO: Додати предмети для всіх класів + хіли.
+           
             Items.AddRange(items);
             Save();
             return Items;

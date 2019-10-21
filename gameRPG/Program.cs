@@ -145,6 +145,7 @@ namespace gameRPG
                         GetSkillsInShop();
                         break;
                     case ConsoleKey.D5:
+                        ButSkill();
                         break;
                     case ConsoleKey.D6:
                         IncreaseInventory();
@@ -165,9 +166,16 @@ namespace gameRPG
         private static void GetSkillsInShop()
         { 
             ShopController shopController = new ShopController(userController.CurrentUser);
-            foreach (var item in shopController.CurrentUser.Skills)
+            if(shopController.CurrentUser.Skills.Count() <= 0)
             {
-                CheckSkills(item);
+                Console.WriteLine("Поки що для Вас немає доступних вміннь в магазині");
+            }
+            else
+            {
+                foreach (var item in shopController.CurrentUser.Skills)
+                {
+                    CheckSkills(item);
+                }
             }
         }
 
@@ -188,6 +196,8 @@ namespace gameRPG
                 Console.WriteLine($"Фіз.захист: {item.PhysicalDefence}");
             if (item.MagicDefence != 0)
                 Console.WriteLine($"Маг.захист: {item.MagicDefence}");
+            if(item.Price != 0)
+                Console.WriteLine($"Ціна: {item.Price}");
             Console.WriteLine($"Перезарядка: {item.Recharge}");
             Console.WriteLine("-------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
@@ -216,7 +226,14 @@ namespace gameRPG
             shopController.BuyItem(Actions());
         }
 
-        
+        private static void ButSkill()
+        {
+            shopController = new ShopController(userController.CurrentUser);
+            Console.WriteLine("Введіть ID вміння, яке ви хочете купити");
+            shopController.MessagesEventSuccess += MessagesEventSuccess;
+            shopController.MessagesEventFail += MessagesEventFail;
+            shopController.BuySkill(Actions());
+        }
 
         private static void ShowItemsInShop()
         {
@@ -287,6 +304,7 @@ namespace gameRPG
                         break;
                     case ConsoleKey.D4:
                         //TODO: Придумати що робити у випадку, виходу під час бою.
+                        battleController.EarlyCompletion();
                         ShowMenu();
                         break;
                     default:

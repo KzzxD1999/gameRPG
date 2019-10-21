@@ -81,11 +81,11 @@ namespace gameRPG.BL.Controller
             {
 
 
-                new Boss(1,"Дракон", CurrentUser.Name, 150, 500, 8, 24, 5,500, bossMoneyOne, null),
+                new Boss(1,"Дракон", CurrentUser.Name, 150, 500, 8, 24, 5,500, 400, null),
 
-                new Boss(2,"Відьма",CurrentUser.Name, 340, 900, 32, 44, 10 , 1100, bossMoneyTwo, null),
+                new Boss(2,"Відьма",CurrentUser.Name, 340, 900, 32, 44, 10 , 1100, 500, null),
 
-                new Boss(3,"Саурон", CurrentUser.Name, 560, 1500, 58, 450, 18, 2400, bossMoneyThree, null)
+                new Boss(3,"Саурон", CurrentUser.Name, 560, 1500, 58, 450, 18, 2400, 600, null)
             };
             Bosses.AddRange(bosses);
             Save();

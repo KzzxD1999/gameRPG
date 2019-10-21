@@ -11,6 +11,7 @@ namespace gameRPG.BL.Controller
     {
 
         public User CurrentUser { get; set; }
+        public List<Skill> Skills { get; set; }
         
         public SkillController(User user)
         {
@@ -27,8 +28,8 @@ namespace gameRPG.BL.Controller
                     skills = new List<Skill>()
                     {
           
-                        new Skill("Підняти броню", "Активне вміння",CurrentUser.Name, 0, 0, 4, 9, 0, 0, 15,false),
-                        new Skill("Відновити HP", "Активне вміння",CurrentUser.Name, 0,0,0,0,35,0, 25,false )
+                        new Skill(1,"Підняти броню", "Активне вміння",CurrentUser.Name, 0, 0, 4, 9, 0, 0, 15,false,1, 0),
+                        new Skill(2,"Відновити HP", "Активне вміння",CurrentUser.Name, 0,0,0,0,35,0, 25,false,1,0)
 
                     };
                     break;
@@ -36,8 +37,8 @@ namespace gameRPG.BL.Controller
                     skills = new List<Skill>()
                     {
                         //TODO: Зробити АКТИВНЕ ВМІННЯ вибором
-                        new Skill("Вогняний постріл", "Активне вміння",CurrentUser.Name, 12, 0, 0,0, 0, 0, 18,false),
-                        new Skill("Підняти магічний захист", "Активне вміння",CurrentUser.Name,0,0,15,0,0,0,22,false )
+                        new Skill(1,"Вогняний постріл", "Активне вміння",CurrentUser.Name, 12, 0, 0,0, 0, 0, 18,false,1, 0),
+                        new Skill(2,"Підняти магічний захист", "Активне вміння",CurrentUser.Name,0,0,15,0,0,0,22,false,1,0 )
 
                     };
                     break;
@@ -45,13 +46,13 @@ namespace gameRPG.BL.Controller
                      skills = new List<Skill>()
                     {
        
-                        new Skill("Підняти атакау", "Активне вміння",CurrentUser.Name, 0, 18, 0,0, 0, 0, 22,false)
+                        new Skill(1,"Підняти атакау", "Активне вміння",CurrentUser.Name, 0, 18, 0,0, 0, 0, 22,false,1, 0)
                         
                     };
                     break;
             }
 
-
+            
              return skills;
 
 

@@ -149,7 +149,7 @@ namespace gameRPG.BL
                         CurrentUser.ManaPoint += Math.Round((CurrentUser.ManaPoint * CurrentUser.Level) / (4.8 + CurrentUser.Level));
                         break;
                     case 3:
-                        CurrentUser.HitPoint += Math.Round((CurrentUser.HitPoint * CurrentUser.Level) / (9.7 + CurrentUser.Level));
+                        CurrentUser.HitPoint += Math.Round((CurrentUser.HitPoint * CurrentUser.Level) / (4.7 + CurrentUser.Level));
                         CurrentUser.Attack += Math.Round((CurrentUser.Attack * CurrentUser.Level) / (6.6 + CurrentUser.Level));
                         CurrentUser.Defence += Math.Round((CurrentUser.Defence * CurrentUser.Level) / (10.1 + CurrentUser.Level));
                         CurrentUser.MagicAttack += Math.Round((CurrentUser.MagicAttack * CurrentUser.Level) / (13.4 + CurrentUser.Level));
