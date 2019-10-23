@@ -69,6 +69,7 @@ namespace gameRPG.BL
             CurrentUser.Skills = skills;
             itemsInShop = shopController.AddItem(raceId);
             skillsInShop = shopController.AddSkills(raceId);
+            shopController.Save();
             SetValueForRace(raceId);
             bosses = bossController.AddBosess();
             CurrentUser.Bosses = bosses;

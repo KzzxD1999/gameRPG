@@ -220,11 +220,12 @@ namespace gameRPG
 
         private static void BuyItems()
         {
+            UserController userController = new UserController(userName);
             shopController = new ShopController(userController.CurrentUser);
             Console.WriteLine("Введіть ID предмету, який ви хочете купити");
             shopController.MessagesEventSuccess += MessagesEventSuccess;
             shopController.MessagesEventFail += MessagesEventFail;
-            shopController.BuyItem(Actions());
+            shopController.BuyItem(Actions(), userController.CurrentUser);
         }
 
         private static void ButSkill()

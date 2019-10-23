@@ -157,14 +157,15 @@ namespace gameRPG.BL.Controller
         }
 
 
-        public void BuyItem(int id)
+        public void BuyItem(int id, User user)
         {
             UserController userController = new UserController(CurrentUser.Name);
             ItemController itemController = new ItemController(CurrentUser);
             while (true)
             {
+                CurrentUser = user;
                 CurrentItem = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
-     
+                    
                 if(CurrentItem != null)
                 {
                     CurrentItem.UserName = CurrentUser.Name;
