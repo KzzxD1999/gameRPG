@@ -1,11 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace gameRPG.BL.Models
 {
     [Serializable]
     public class Skill
     {
-        public Skill(int id, string name, string type,string userName, double magicDamage, double physicalDamage, double magicDefence, double phisicalDefence, double hitPoint, double manaPoint, double recharge, bool inShop, int levelToBuy, int price )
+
+        public Dictionary<int, string> CategoryDict = new Dictionary<int, string>()
+        {
+            {1,"Фізичний урон" },
+            {2,"Магічний урон" },
+            {3, "Фізичний захист" },
+            {4, "Дебаф" },
+            {5,"Відхіл" },
+            {6,"Магічний захист" },
+            {7,"Баф" }
+        };
+        public Skill(int id, string name, string type,string userName, double magicDamage, double physicalDamage, double magicDefence, double phisicalDefence, double hitPoint, double manaPoint, double recharge, bool inShop, int levelToBuy, int price,  int catId )
         {
             Id = id;
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -22,6 +34,13 @@ namespace gameRPG.BL.Models
             InShop = inShop;
             LevelToBuy = levelToBuy;
 
+            CategoryName = CategoryDict[catId];
+            CategoryId = catId;
+
+        }
+        public Skill(int id)
+        {
+            CategoryId = id;
         }
 
         public int Id { get; set; }
@@ -38,6 +57,8 @@ namespace gameRPG.BL.Models
         public int Price { get; set; }
         public bool InShop { get; set; }
         public int LevelToBuy { get; set; }
+        public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
 
 
     }

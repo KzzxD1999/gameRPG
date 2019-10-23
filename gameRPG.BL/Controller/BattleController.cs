@@ -15,13 +15,20 @@ namespace gameRPG.BL.Controller
         public double UserHpAndDef { get; set; }
         public bool IsExit { get; set; } = false;
         public bool IsWin { get; set; } = false;
+        public Skill Skill { get; set; }
+        public List<Skill> Skills { get; set; }
         public BattleController(User user, Boss boss)
         {
             CurrentUser = user;
             CurrentBoss = boss;
+
+            Skills = CurrentUser.Skills.ToList();
+
+
             //TODO: Як враховувати броню ?? перевірка значень тому що вилітає програма
             BossHpAndDef = Math.Round(CurrentBoss.HitPoint + (CurrentBoss.Defence * 0.1), 2);
             UserHpAndDef = Math.Round(CurrentUser.HitPoint + (CurrentUser.Defence * 0.9),2);
+           
         }
        
 
@@ -119,6 +126,69 @@ namespace gameRPG.BL.Controller
             Messages($"Користувач {CurrentUser.Name} програв", false);
             
 
+        }
+
+        public void MagicAttack(int id)
+        {
+            //CurrentUser.Skills = GetSkills();
+            var skill = CurrentUser.Skills.FirstOrDefault(x=>x.Id == id);
+
+            //TODO: Подумати тут
+            Skill skill1 = new Skill(skill.CategoryId);
+            var mk = skill1.CategoryDict.FirstOrDefault(x => x.Key == skill.CategoryId);
+            bool isRecharge = true;
+            
+            switch (mk.Key)
+            {
+                case 1:
+                    BossHpAndDef -= skill.PhysicalDamage;
+                    break;
+                case 2:
+                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
+                    {
+                        //TODO: Зробити перезарядку
+                        BossHpAndDef -= (skill.MagicDamage + CurrentUser.MagicAttack) + (CurrentUser.MagicAttack * 0.2);
+                        CurrentUser.ManaPoint -= skill.ManaPoint;
+                    }
+                    else
+                    {
+                        Messages("Недостатньо мани", false);
+                    }
+                    break;
+                case 3:
+                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
+                    {
+
+                        UserHpAndDef += skill.PhysicalDamage;
+                    }
+                    else
+                    {
+                        Messages("Недостатнь мани",false);
+                    }
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
+                    {
+                        UserHpAndDef += skill.HitPoint;
+                        CurrentUser.ManaPoint -= skill.ManaPoint;
+                    }
+                     break;
+                case 6:
+                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
+                    {
+                        UserHpAndDef += skill.MagicDefence;
+                        CurrentUser.ManaPoint -= skill.ManaPoint;
+                    }
+                    else
+                    {
+                        Messages("Недостатньо мани",false);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

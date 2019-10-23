@@ -44,8 +44,8 @@ namespace gameRPG.BL.Controller
                 case 1:
                     skills = new List<Skill>()
                         {
-                            new Skill(3,"Удар дракона", "Активний",CurrentUser.Name, 0, 22, 0, 0, 0,20,3, true, 1, 250),
-                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7, true, 15, 1500),
+                            new Skill(3,"Удар дракона", "Активний",CurrentUser.Name, 0, 22, 0, 0, 0,20,3, true, 1, 250, 1),
+                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7, true, 15, 1500, 5),
 
 
                         };
@@ -54,8 +54,8 @@ namespace gameRPG.BL.Controller
                     skills = new List<Skill>()
                         {
                             //TODO: Заморожувати ворога
-                            new Skill(3,"Заморожуючий удар", "Активний",CurrentUser.Name, 9,0,0,0,0,66,7,true, 1, 250),
-                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7,true, 15, 1500),
+                            new Skill(3,"Заморожуючий удар", "Активний",CurrentUser.Name, 9,0,0,0,0,66,7,true, 1, 250, 4),
+                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,50,35,7,true, 15, 1500, 5),
 
 
                         };
@@ -64,8 +64,8 @@ namespace gameRPG.BL.Controller
                     skills = new List<Skill>()
                         {
                             
-                            new Skill(3,"Знімання броні", "Активний",CurrentUser.Name, 0,0,-5,-8, 0,0,4,true, 1, 150),
-                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,38,20,7,true, 10, 1200),
+                            new Skill(3,"Знімання броні", "Активний",CurrentUser.Name, 0,0,-5,-8, 0,0,4,true, 1, 150, 4),
+                            new Skill(4,"Підпищення здоров'я", "Активний",CurrentUser.Name, 0,0,0,0,38,20,7,true, 10, 1200, 5),
 
 
                         };

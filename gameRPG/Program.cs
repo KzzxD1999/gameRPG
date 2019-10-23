@@ -183,6 +183,7 @@ namespace gameRPG
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("-------------------------------------");
+            Console.WriteLine($"Id:{item.Id}");
             Console.WriteLine($"Назва: {item.Name}");
             if (item.HitPoint != 0)
                 Console.WriteLine($"Здоров'я: {item.HitPoint}");
@@ -302,8 +303,14 @@ namespace gameRPG
                     case ConsoleKey.D1:
                         battleController.Attack();
                         break;
+                    case ConsoleKey.D2:
+                        ChooseSkill();
+                        Console.WriteLine("Ввдеіть ID вміння:");
+                        battleController.MagicAttack(Actions());
+
+                        
+                        break;
                     case ConsoleKey.D4:
-                        //TODO: Придумати що робити у випадку, виходу під час бою.
                         battleController.EarlyCompletion();
                         ShowMenu();
                         break;
@@ -314,6 +321,15 @@ namespace gameRPG
  
 
 
+        }
+
+        private static void ChooseSkill()
+        {
+            UserController userController = new UserController(userName);
+            foreach (var item in userController.CurrentUser.Skills)
+            {
+                CheckSkills(item);
+            }
         }
 
         private static void BattleInformation(BattleController battleController)
