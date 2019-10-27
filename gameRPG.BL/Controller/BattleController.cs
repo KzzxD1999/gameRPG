@@ -15,8 +15,9 @@ namespace gameRPG.BL.Controller
         public double UserHpAndDef { get; set; }
         public bool IsExit { get; set; } = false;
         public bool IsWin { get; set; } = false;
-        public Skill Skill { get; set; }
+        public Skill CurrentSkill { get; set; } = null;
         public List<Skill> Skills { get; set; }
+        
         public BattleController(User user, Boss boss)
         {
             CurrentUser = user;
@@ -36,10 +37,22 @@ namespace gameRPG.BL.Controller
         //TODO: Додати користувачу по замовчуванню декілька аптечок, для можливості відхілу
         public void Attack()
         {
+            
+
             BossHpAndDef -= CurrentUser.Attack;
             UserHpAndDef -= CurrentBoss.Attack;
             Math.Round(UserHpAndDef, 2);
             Math.Round(BossHpAndDef, 2);
+            if (CurrentSkill != null && CurrentSkill.IsRecharge)
+            {
+                CurrentSkill.Recharge -= 1;
+                if (CurrentSkill.Recharge ==0)
+                {
+                    CurrentSkill.IsRecharge = false;
+                }
+                UserController userController = new UserController(CurrentUser.Name);
+                userController.Save();
+            }
             if (UserHpAndDef <= 0)
             {
                 
@@ -131,63 +144,83 @@ namespace gameRPG.BL.Controller
         public void MagicAttack(int id)
         {
             //CurrentUser.Skills = GetSkills();
-            var skill = CurrentUser.Skills.FirstOrDefault(x=>x.Id == id);
+            CurrentSkill = CurrentUser.Skills.FirstOrDefault(x => x.Id == id);
 
+            UserController userController = new UserController(CurrentUser.Name);
             //TODO: Подумати тут
-            Skill skill1 = new Skill(skill.CategoryId);
-            var mk = skill1.CategoryDict.FirstOrDefault(x => x.Key == skill.CategoryId);
-            bool isRecharge = true;
-            
-            switch (mk.Key)
+            Skill skill1 = new Skill(CurrentSkill.CategoryId);
+            var mk = skill1.CategoryDict.FirstOrDefault(x => x.Key == CurrentSkill.CategoryId);
+            if (!CurrentSkill.IsRecharge)
             {
-                case 1:
-                    BossHpAndDef -= skill.PhysicalDamage;
-                    break;
-                case 2:
-                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
-                    {
-                        //TODO: Зробити перезарядку
-                        BossHpAndDef -= (skill.MagicDamage + CurrentUser.MagicAttack) + (CurrentUser.MagicAttack * 0.2);
-                        CurrentUser.ManaPoint -= skill.ManaPoint;
-                    }
-                    else
-                    {
-                        Messages("Недостатньо мани", false);
-                    }
-                    break;
-                case 3:
-                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
-                    {
+                switch (mk.Key)
+                {
+                    case 1:
+                        if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)
+                        {
+                            BossHpAndDef -= CurrentSkill.PhysicalDamage;
+                            CurrentSkill.IsRecharge = true;
+                            
+                        }
+                        else
+                        {
+                            Messages("Недостатньо мани", false);
+                        }
+                        break;
+                    case 2:
+                        if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)
+                        {
+                            //TODO: Зробити перезарядку
+                            BossHpAndDef -= (CurrentSkill.MagicDamage + CurrentUser.MagicAttack) + (CurrentUser.MagicAttack * 0.2);
+                            CurrentUser.ManaPoint -= CurrentSkill.ManaPoint;
+                            CurrentSkill.IsRecharge = true;
+                            userController.Save();
+                        }
+                        else
+                        {
+                            Messages("Недостатньо мани", false);
+                        }
+                        break;
+                    case 3:
+                        if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)
+                        {
 
-                        UserHpAndDef += skill.PhysicalDamage;
-                    }
-                    else
-                    {
-                        Messages("Недостатнь мани",false);
-                    }
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
-                    {
-                        UserHpAndDef += skill.HitPoint;
-                        CurrentUser.ManaPoint -= skill.ManaPoint;
-                    }
-                     break;
-                case 6:
-                    if (CurrentUser.ManaPoint >= skill.ManaPoint)
-                    {
-                        UserHpAndDef += skill.MagicDefence;
-                        CurrentUser.ManaPoint -= skill.ManaPoint;
-                    }
-                    else
-                    {
-                        Messages("Недостатньо мани",false);
-                    }
-                    break;
-                default:
-                    break;
+                            UserHpAndDef += CurrentSkill.PhysicalDamage;
+                            CurrentSkill.IsRecharge = true;
+                        }
+                        else
+                        {
+                            Messages("Недостатнь мани", false);
+                        }
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)
+                        {
+                            UserHpAndDef += CurrentSkill.HitPoint;
+                            CurrentUser.ManaPoint -= CurrentSkill.ManaPoint;
+                            CurrentSkill.IsRecharge = true;
+                        }
+                        break;
+                    case 6:
+                        if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)
+                        {
+                            UserHpAndDef += CurrentSkill.MagicDefence;
+                            CurrentUser.ManaPoint -= CurrentSkill.ManaPoint;
+                            CurrentSkill.IsRecharge = true;
+                        }
+                        else
+                        {
+                            Messages("Недостатньо мани", false);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                Messages("Перезарядка", false);
             }
         }
     }

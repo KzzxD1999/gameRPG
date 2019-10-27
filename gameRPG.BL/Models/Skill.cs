@@ -59,7 +59,7 @@ namespace gameRPG.BL.Models
         public int LevelToBuy { get; set; }
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }
-
+        public bool IsRecharge { get; set; } = false;
 
     }
 }

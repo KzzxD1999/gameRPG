@@ -156,7 +156,7 @@ namespace gameRPG.BL.Controller
             }
         }
 
-
+        //TODO: Зробити нормальну перевірку в циклі якщо недостатньо грошей
         public void BuyItem(int id, User user)
         {
             UserController userController = new UserController(CurrentUser.Name);
