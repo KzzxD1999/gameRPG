@@ -90,6 +90,8 @@ namespace gameRPG.BL
                     CurrentUser.MagicAttack = 5;
                     CurrentUser.MagicDef = 9;
                     CurrentUser.ManaPoint = 100;
+                    CurrentUser.ChanceCriticalAttack = 0.2;
+                    CurrentUser.CriticalAttack += Math.Round(CurrentUser.Attack * 1.4, 2);
                     break;
                 case 2:
                     CurrentUser.MagicAttack = 12;
@@ -97,6 +99,9 @@ namespace gameRPG.BL
                     CurrentUser.Attack = 5;
                     CurrentUser.Defence = 6;
                     CurrentUser.ManaPoint = 200;
+
+                    CurrentUser.ChanceCriticalAttack = 0.3;
+                    CurrentUser.CriticalAttack += CurrentUser.MagicAttack * 1.8;
                     break;
                 case 3:
                     CurrentUser.Attack = 17;
@@ -104,6 +109,9 @@ namespace gameRPG.BL
                     CurrentUser.MagicAttack = 5;
                     CurrentUser.MagicDef = 4;
                     CurrentUser.ManaPoint = 100;
+
+                    CurrentUser.ChanceCriticalAttack = 0.1;
+                    CurrentUser.CriticalAttack += CurrentUser.Attack * 2;
                     break;
             }
         }
@@ -125,7 +133,7 @@ namespace gameRPG.BL
         public void LvlUp()
         {
             //TODO: Придумати, як піднімати стати персонажу, після підвищення рівня.
-      
+            //TODO: Критичний удар ап
             if(CurrentUser.Experience >= CurrentUser.ExpToUp)
             {
 

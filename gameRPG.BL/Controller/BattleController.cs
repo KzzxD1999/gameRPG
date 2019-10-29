@@ -37,10 +37,22 @@ namespace gameRPG.BL.Controller
         //TODO: Додати користувачу по замовчуванню декілька аптечок, для можливості відхілу
         public void Attack()
         {
-            
 
-            BossHpAndDef -= CurrentUser.Attack;
-            UserHpAndDef -= CurrentBoss.Attack;
+            Random random = new Random();
+            var d = random.NextDouble();
+            if (CurrentUser.ChanceCriticalAttack > d)
+            {
+                BossHpAndDef -= CurrentUser.CriticalAttack;
+                UserHpAndDef -= CurrentBoss.Attack;
+                Messages("Кріт урон", true);
+            }
+            else
+            {
+                BossHpAndDef -= CurrentUser.Attack;
+                UserHpAndDef -= CurrentBoss.Attack;
+            }
+
+            
             Math.Round(UserHpAndDef, 2);
             Math.Round(BossHpAndDef, 2);
             if (CurrentSkill != null && CurrentSkill.IsRecharge)

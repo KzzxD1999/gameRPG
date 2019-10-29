@@ -34,12 +34,14 @@ namespace gameRPG.BL.Models
         public int Loss { get; set; } = 0;
         public Rase Rase { get; set; }
         public List<Skill> Skills { get; set; }
+        public double ChanceCriticalAttack { get; set; }
+        public double CriticalAttack { get; set; }
         public User(string name)
         {
             Name = name;
         }
 
-        public User(string name, int age, Gender gender, double hitPoint, double manaPoint, double attack, double defence, List<Item> items)
+        public User(string name, int age, Gender gender, double hitPoint, double manaPoint, double attack, double defence, double chanceCriticalAttack, double criticalAttack, List<Item> items)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -63,6 +65,8 @@ namespace gameRPG.BL.Models
             ManaPoint = manaPoint;
             Attack = attack;
             Defence = defence;
+            ChanceCriticalAttack = chanceCriticalAttack;
+            CriticalAttack = criticalAttack;
             Items = items;
         }
         
