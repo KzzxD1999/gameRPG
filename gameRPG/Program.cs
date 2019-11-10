@@ -459,6 +459,7 @@ namespace gameRPG
        
 
         }
+        //TODO: подумати над атакою
 
         private static void MessagesEventFail(object sender, string e)
         {

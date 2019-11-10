@@ -28,7 +28,7 @@ namespace gameRPG.BL.Controller
 
             //TODO: Як враховувати броню ?? перевірка значень тому що вилітає програма
             BossHpAndDef = Math.Round(CurrentBoss.HitPoint + (CurrentBoss.Defence * 0.1), 2);
-            UserHpAndDef = Math.Round(CurrentUser.HitPoint + (CurrentUser.Defence * 0.9),2);
+            UserHpAndDef = Math.Round(CurrentUser.HitPoint + (CurrentUser.Defence * 0.9), 2);
            
         }
        
@@ -39,20 +39,57 @@ namespace gameRPG.BL.Controller
         {
 
             Random random = new Random();
-            var d = random.NextDouble();
-            if (CurrentUser.ChanceCriticalAttack > d)
+            var forUser = random.NextDouble();
+            var forBoss = random.NextDouble();
+            bool isUserCritical = false;
+            bool isBossCritical = false;
+
+            if (CurrentUser.ChanceCriticalAttack > forUser)
             {
                 BossHpAndDef -= CurrentUser.CriticalAttack;
                 UserHpAndDef -= CurrentBoss.Attack;
                 Messages("Кріт урон", true);
+                isUserCritical = true;
             }
-            else
+            if (CurrentBoss.CriticalChance > forBoss)
             {
                 BossHpAndDef -= CurrentUser.Attack;
-                UserHpAndDef -= CurrentBoss.Attack;
+                if (!CurrentBoss.IsStun)
+                {
+
+                    UserHpAndDef -= CurrentBoss.CriticalAttack;
+                    Messages("Кріт урон від боса", false);
+                }
+                else
+                {
+                    CurrentBoss.StunningTime -= 1;
+                    if (CurrentBoss.StunningTime == 0)
+                    {
+                        CurrentBoss.IsStun = false;
+                    }
+                }
+                isBossCritical = true;
             }
 
-            
+            if (!isUserCritical)
+            {
+                BossHpAndDef -= CurrentUser.Attack;
+            }
+            if (!isBossCritical)
+            {
+                if (!CurrentBoss.IsStun)
+                {
+                    UserHpAndDef -= CurrentBoss.Attack;
+                }
+                else
+                {
+                    CurrentBoss.StunningTime -= 1;
+                    if (CurrentBoss.StunningTime == 0)
+                    {
+                        CurrentBoss.IsStun = false;
+                    }
+                }
+            }
             Math.Round(UserHpAndDef, 2);
             Math.Round(BossHpAndDef, 2);
             if (CurrentSkill != null && CurrentSkill.IsRecharge)
@@ -67,10 +104,12 @@ namespace gameRPG.BL.Controller
             }
             if (UserHpAndDef <= 0)
             {
-                
+                UserController userController = new UserController(CurrentUser.Name);
+                ItemController itemController = new ItemController(CurrentUser);
+
                 Messages($"Користувач: {CurrentUser.Name} програв", false);
                 Messages($"Ви нічого не отримали", false);
-                
+                SaveUser(userController, itemController);
                 IsExit = true;
                
             }
@@ -181,7 +220,6 @@ namespace gameRPG.BL.Controller
                     case 2:
                         if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)
                         {
-                            //TODO: Зробити перезарядку
                             BossHpAndDef -= (CurrentSkill.MagicDamage + CurrentUser.MagicAttack) + (CurrentUser.MagicAttack * 0.2);
                             CurrentUser.ManaPoint -= CurrentSkill.ManaPoint;
                             CurrentSkill.IsRecharge = true;
@@ -205,6 +243,15 @@ namespace gameRPG.BL.Controller
                         }
                         break;
                     case 4:
+                        if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)
+                        {
+
+                            CurrentBoss.IsStun = true;
+                            BossHpAndDef -= CurrentSkill.MagicDamage;
+                            CurrentSkill.IsRecharge = true;
+                            CurrentBoss.StunningTime = 2;
+                        }
+                        
                         break;
                     case 5:
                         if (CurrentUser.ManaPoint >= CurrentSkill.ManaPoint)

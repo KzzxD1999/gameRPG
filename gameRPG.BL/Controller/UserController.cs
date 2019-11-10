@@ -27,9 +27,8 @@ namespace gameRPG.BL
             if (CurrentUser == null)
             {
                 
-     
                 CurrentUser = new User(name);
-               
+           
                 Users.Add(CurrentUser);
                 CurrentUser.Rase = new Rase();
                 CurrentUser.Skills = new List<Skill>();
@@ -85,6 +84,7 @@ namespace gameRPG.BL
             {
 
                 case 1:
+                    
                     CurrentUser.Attack = 11;
                     CurrentUser.Defence = 14;
                     CurrentUser.MagicAttack = 5;
@@ -168,13 +168,7 @@ namespace gameRPG.BL
                     default:
                         break;
                 }
-               
-
                 CurrentUser.ExpToUp += CurrentUser.ExpToUp * 1.2;
-                
-
-
-
                 CurrentUser.ExpToUp -= remainderOfExp;
                 CurrentUser.Experience = 0;
             }

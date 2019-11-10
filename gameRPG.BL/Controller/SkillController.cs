@@ -11,7 +11,6 @@ namespace gameRPG.BL.Controller
     {
 
         public User CurrentUser { get; set; }
-        public List<Skill> Skills { get; set; }
         
         public SkillController(User user)
         {
@@ -54,8 +53,6 @@ namespace gameRPG.BL.Controller
 
             
              return skills;
-
-
 
         }
 

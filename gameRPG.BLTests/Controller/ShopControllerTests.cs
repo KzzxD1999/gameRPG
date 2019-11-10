@@ -50,7 +50,7 @@ namespace gameRPG.BL.Controller.Tests
             double price = random.Next(50, 250);
             UserController userController = new UserController(userName);
             ItemController itemController = new ItemController(userController.CurrentUser);
-            Item item = new Item(id, itemName, itemCategory, userName, attack, defence, hitPoint, manaPoint, false, weight, price);
+            Item item = new Item(id, itemName, itemCategory, userName, attack, defence, hitPoint, manaPoint );
             itemController.Items.Add(item);
             itemController.SaveItems();
             userController.CurrentUser.Weight = 500;

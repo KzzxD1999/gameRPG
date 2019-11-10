@@ -41,34 +41,7 @@ namespace gameRPG.BL.Models
             Name = name;
         }
 
-        public User(string name, int age, Gender gender, double hitPoint, double manaPoint, double attack, double defence, double chanceCriticalAttack, double criticalAttack, List<Item> items)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("message", nameof(name));
-            }
-
-            if (gender is null)
-            {
-                throw new ArgumentNullException(nameof(gender));
-            }
-
-            if (items is null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-
-            Name = name;
-            Age = age;
-            Gender = gender;
-            HitPoint = hitPoint;
-            ManaPoint = manaPoint;
-            Attack = attack;
-            Defence = defence;
-            ChanceCriticalAttack = chanceCriticalAttack;
-            CriticalAttack = criticalAttack;
-            Items = items;
-        }
+        
         
 
     }

@@ -19,25 +19,11 @@ namespace gameRPG.BL.Controller
         {
             CurrentUser = user;
             Items = GetItems();
-          
-           
-          
-            //if (Items.Count <=0 )
-            //{
-            //    DefaultItems(CurrentUser.Name);
-            //    SaveItems();
-            //}
             CurrentUser.Items = GetCurrentItems(CurrentUser);
-
-
-
         }
         private List<Item> GetItems()
         {
             return Load<List<Item>>(FILE_NAME) ?? new List<Item>();
-
-
-
         }
         private List<Item> GetCurrentItems(User user)
         {
@@ -93,7 +79,7 @@ namespace gameRPG.BL.Controller
         public void SellItem(int id)
         {
             CurrentItem = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
-            CurrentUser.Item = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
+            //CurrentUser.Item = Items.Find(x => x.Id == id && x.UserName == CurrentUser.Name);
             UserController userController = new UserController(CurrentUser.Name);
             if(CurrentItem !=null)
             {
@@ -104,7 +90,6 @@ namespace gameRPG.BL.Controller
                     Items.Remove(CurrentItem);
                     userController.Save();
                     SaveItems();
-
                     Messages($"Пердмет: {CurrentItem.Name} продано", true);
                 }
                 else
@@ -124,31 +109,30 @@ namespace gameRPG.BL.Controller
             CurrentUser.Item = Items.Find(x=>x.Id == id && x.UserName == CurrentUser.Name);
             UserController userController = new UserController(CurrentUser.Name);
             //TODO: Подумати над перевіркою значень
-            if (CurrentItem != null && !CurrentItem.IsEquipped)
+            if (CurrentItem != null)
             {
-                CurrentItem.IsEquipped = true;
-
-
-                CurrentUser.Item.IsEquipped = CurrentItem.IsEquipped;
-                userController.CurrentUser.HitPoint += CurrentItem.HitPoint;
-                userController.CurrentUser.ManaPoint += CurrentItem.ManaPoint;
-                userController.CurrentUser.Attack += CurrentItem.Attack;
-                userController.CurrentUser.Defence += CurrentItem.Defence;
-                userController.Save();
-                SaveItems();
-                Messages($"Предмет: {CurrentItem.Name} одіто!", true);
-            }
-            else if(CurrentItem == null)
-            {
-               
-                Messages("Введіть коректний ID", false);
+                if (!CurrentUser.Item.IsEquipped)
+                {
+                    CurrentItem.IsEquipped = true;
+                    CurrentUser.Item.IsEquipped = CurrentItem.IsEquipped;
+                    userController.CurrentUser.HitPoint += CurrentItem.HitPoint;
+                    userController.CurrentUser.ManaPoint += CurrentItem.ManaPoint;
+                    userController.CurrentUser.Attack += CurrentItem.Attack;
+                    userController.CurrentUser.Defence += CurrentItem.Defence;
+                    userController.Save();
+                    SaveItems();
+                    Messages($"Предмет: {CurrentItem.Name} одіто!", true);
+                }
+                else
+                {
+                    Messages($"Предмет {CurrentItem.Name} вже одіто!", false);
+                }
             }
             else
             {
-                
                 Messages("Предмет вже одітий!", false);
-               
             }
+
         }
         public void ResetItem(int id)
         {

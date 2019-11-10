@@ -33,11 +33,11 @@ namespace gameRPG.BL.Tests
             UserController userController = new UserController(userName);
             Gender gender = new Gender(genderName);
            
-            userController.SetNewUserData(age, gender.Name);
+            userController.SetNewUserData(age, gender.Name, 2);
             Assert.AreEqual(userName, userController.CurrentUser.Name);
 
             Assert.AreEqual(genderName, gender.Name);
-            Assert.AreEqual(age, userController.CurrentUser.Age);
+            Assert.AreEqual(age, userController .CurrentUser.Age);
         }
 
         [TestMethod()]
@@ -48,8 +48,6 @@ namespace gameRPG.BL.Tests
             int money = random.Next(10, 100);
             UserController userController = new UserController(userName);
             userController.CurrentUser.Money += money;
-
-
             Assert.AreEqual(money, userController.CurrentUser.Money);
             Assert.IsTrue(money == userController.CurrentUser.Money);
         }

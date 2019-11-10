@@ -18,10 +18,14 @@ namespace gameRPG.BL.Models
         public string UserName { get; set; }
         public int Level { get; set; }
         public double DropExp { get; set; }
+        public double CriticalChance { get; set; }
+        public double CriticalAttack { get; set; }
         public double MoneyDrop { get; set; }
         public List<Item> Items { get; set; }
+        public bool IsStun { get; set; } = false;
+        public int StunningTime { get; set; }
 
-        public Boss(int id, string name, string userName, double hitPoint, double manaPoint, double attack, double defence, int level, double dropExp, double moneyDrop, List<Item> items)
+        public Boss(int id, string name, string userName, double hitPoint, double manaPoint, double attack, double defence, int level, double dropExp, double moneyDrop, List<Item> items, double criticalChance, double criticalAttack)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -40,6 +44,8 @@ namespace gameRPG.BL.Models
             DropExp = dropExp;
             MoneyDrop = moneyDrop;
             Items = items;
+            CriticalChance = criticalChance;
+            CriticalAttack = criticalAttack;
         }
     }
 
